@@ -1,8 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const config = require('./config/config.js');
-
+const morgan = require('morgan');
 const app = express();
+
+// Logging
+app.use(morgan('dev'));
 
 // Middleware
 app.use(express.json());
