@@ -1,0 +1,26 @@
+{
+  "name": "agora",
+  "version": "1.0.0",
+  "description": "An online platform where users can share and fact-check posts.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayukseluf/Agora.git"
+  },
+  "author": "Verifica",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ayukseluf/Agora/issues"
+  },
+  "homepage": "https://github.com/ayukseluf/Agora#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "concurrently": "^5.3.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.10.9",
+    "nodemon": "^2.0.5"
+  }
+}
