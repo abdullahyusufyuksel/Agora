@@ -1,4 +1,4 @@
-import Comment from "../models/commentModel.js";
+const Comment = require("../models/commentModel.js");
 
 export
 {
