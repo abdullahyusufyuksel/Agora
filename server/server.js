@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const config = require('./config/config.js');
+const config = require('../config/config.js');
 const morgan = require('morgan');
 const app = express();
 
@@ -21,5 +21,5 @@ mongoose.connect(config.URI)
 
 app.listen(config.PORT, function() 
 {
-     console.log(`App now listening on port ${config.port}`)
+     console.log(`App now listening on port ${config.PORT}`)
 });
