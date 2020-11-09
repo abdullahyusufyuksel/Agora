@@ -10,9 +10,15 @@
     text-align: center;
 }
 
+.profile-header {
+    text-align: left;
+    padding-bottom: 10px;
+}
+
 
 .details {
     margin: 20px;
+    text-align: center;
 }
 
 .comment {
@@ -26,6 +32,8 @@
 
 .source {
     font: italic;
+    display: inline-block;
+    text-align: left;
 }
 
 .profile-icon {
@@ -34,8 +42,12 @@
 }
 
 .post-img {
-    height: 750px;
-    width: 750px;
-    object-fit: cover;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
 
+.sentence {
+    padding-bottom: 20px;
 }
