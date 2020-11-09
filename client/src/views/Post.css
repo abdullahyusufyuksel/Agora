@@ -1,0 +1,41 @@
+.Post {
+    width: 100%;
+    max-width: 1000px;
+    padding: 20px;
+    margin: auto;
+    justify-content: center;
+}
+
+.comment-header {
+    text-align: center;
+}
+
+
+.details {
+    margin: 20px;
+}
+
+.comment {
+    margin-top: 20px;
+}
+
+.comment-bar {
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.source {
+    font: italic;
+}
+
+.profile-icon {
+    height:50px;
+    width:50px;
+}
+
+.post-img {
+    height: 750px;
+    width: 750px;
+    object-fit: cover;
+
+}
