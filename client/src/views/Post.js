@@ -6,19 +6,15 @@ import "./Post.css"
 export default function Post() {
   return (
     <div className="Post" >
-            <Row xs={2} md={4} lg={6}>
-                <Col>
-                    <Image className="profile-icon" src="https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg" roundedCircle />
-                </Col>
-                <Col>
-                    Username (123)
-               </Col>
-            </Row>
+            <div className = "profile-header">
+                <Image className="profile-icon" src="https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg" roundedCircle />
+                Username (123)
+            </div>
             <Image fluid className="post-img" src="https://cdn.cnn.com/cnnnext/dam/assets/200622104651-black-lives-matter-support-impact-0613-large-169.jpg"/>
 
             <Container className="details">
                 <Row>
-                    <Col>
+                    <Col className = "sentence">
                         <h6>The Black Lives Matter Movement has been fresh on my mind, what do you all think?</h6>
                     </Col>
                 </Row>
