@@ -1,7 +1,6 @@
 import { LinkContainer } from 'react-router-bootstrap';
 import Routes from './Routes.js';
-
-import { Nav, Navbar, NavItem} from 'react-bootstrap';
+import { Nav, Navbar, NavItem, Image} from 'react-bootstrap';
 function App() {
   return (
     <div className="App">
@@ -15,6 +14,9 @@ function App() {
         </LinkContainer>
         <LinkContainer to="/register">
           <Nav.Link>Register</Nav.Link>
+        </LinkContainer>
+        <LinkContainer to="/postview">
+          <Nav.Link>Post Example</Nav.Link>
         </LinkContainer>
       </Nav>
     </Navbar>
