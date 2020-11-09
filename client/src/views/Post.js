@@ -19,14 +19,18 @@ export default function Post() {
             <Container className="details">
                 <Row>
                     <Col>
-                        The Black Lives Matter Movement has been fresh on my mind, what do you all think?
+                        <h6>The Black Lives Matter Movement has been fresh on my mind, what do you all think?</h6>
                     </Col>
                 </Row>
 
                 <Row>
                     <Col className="source">
+                    <p>
                     <a href="https://www.cnn.com/2020/06/23/politics/black-lives-matter-support-impact/index.html"> <i> > https://www.cnn.com/2020/06/23/politics/black-lives-matter-support-impact/index.html</i></a>
-                        
+                    </p>
+                    <p>
+                    <a href="https://blacklivesmatter.com/"> <i> > https://blacklivesmatter.com/</i></a>
+                    </p>
                     </Col>
                 </Row>
 
