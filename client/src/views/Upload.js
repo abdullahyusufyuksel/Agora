@@ -13,11 +13,12 @@ export default class Login extends React.Component{
     showPreview(event){
         if(event.target.files.length > 0){
           var src = URL.createObjectURL(event.target.files[0]);
-          var preview = document.getElementById("file-ip-1-preview");
+          var preview = document.getElementById("file-ip-1");
           preview.src = src;
           preview.style.display = "block";
         }
     }  
+    
     render(){
         return (
             <div className="upload">
