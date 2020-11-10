@@ -12,7 +12,7 @@ function App() {
         <Navbar.Brand>Agora</Navbar.Brand>
       </LinkContainer>
 
-      <Nav>
+      <Nav class="navbar-nav ml-auto">
         <LinkContainer to="/login">
           <Nav.Link>Login</Nav.Link>
         </LinkContainer>
@@ -21,6 +21,9 @@ function App() {
         </LinkContainer>
         <LinkContainer to="/postview">
           <Nav.Link>Post Example</Nav.Link>
+        </LinkContainer>
+        <LinkContainer to="/uploadview">
+          <Nav.Link>Upload</Nav.Link>
         </LinkContainer>
       </Nav>
     </Navbar>
