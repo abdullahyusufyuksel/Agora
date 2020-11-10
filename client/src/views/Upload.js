@@ -13,7 +13,7 @@ export default class Login extends React.Component{
     showPreview(event){
         if(event.target.files.length > 0){
           var src = URL.createObjectURL(event.target.files[0]);
-          var preview = document.getElementById("file-ip-1");
+          var preview = document.getElementById("file-ip-1-preview");
           preview.src = src;
           preview.style.display = "block";
         }
@@ -39,6 +39,26 @@ export default class Login extends React.Component{
                         </div>
                     </div>
                     </Form.Group>
+                    <Form.Group>
+                        <Form.Label>
+                            Statement
+                        </Form.Label>
+                        <Form.Control placeholder="Enter a statement about the image." />
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>
+                            Sources
+                        </Form.Label>
+                        <Form.Control placeholder="Enter sources of support or information." />
+                        <div class="text-right">
+                            <Button onClick={this.click}>
+                                Add
+                            </Button>
+                        </div>
+                    </Form.Group>
+                    
+
+
                     <div class="text-center">
                         <Button onClick={this.click}>
                             Submit
