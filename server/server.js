@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const config = require('../config/config.js');
 const morgan = require('morgan');
+const userRouter = require('./routes/userRouter.js');
 const app = express();
 
 // Logging
@@ -18,6 +19,8 @@ mongoose.connect(config.URI)
     })
     .catch(error => console.log(error));
 
+// Routers
+app.use('/', userRouter);
 
 app.listen(config.PORT, function() 
 {
