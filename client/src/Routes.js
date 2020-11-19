@@ -7,6 +7,7 @@ import Login from "./views/Login";
 import Register from "./views/Register";
 import Post from "./views/Post";
 import Upload from "./views/Upload";
+import Profile from "./views/Profile"
 
 export default function Routes() {
   return (
@@ -16,6 +17,9 @@ export default function Routes() {
       </Route>
       <Route exact path="/login">
         <Login />
+      </Route>
+      <Route exact path="/profile">
+        <Profile />
       </Route>
       <Route exact path="/register">
         <Register />
