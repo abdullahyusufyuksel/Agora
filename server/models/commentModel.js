@@ -9,4 +9,4 @@ const commentSchema = new mongoose.Schema(
     upvotes: {type: Int, required: true}    
 });
 
-export default mongoose.model('COMMENTS', commentSchema);
+module.exports = mongoose.model('COMMENTS', commentSchema);

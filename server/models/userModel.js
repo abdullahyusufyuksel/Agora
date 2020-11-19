@@ -13,4 +13,4 @@ const userSchema = new mongoose.Schema(
     postsUpvoted: [String]
 });
 
-export default mongoose.model('USERS', userSchema);
+module.exports = mongoose.model('USERS', userSchema);

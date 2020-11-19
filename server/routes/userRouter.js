@@ -1,6 +1,11 @@
-import * as userController from '../controllers/userController.js';
-import express from 'express';
+const userController = require('../controllers/userController.js');
+const express = require('express');
 const userRouter = express.Router();
 
+// Route for registering
+userRouter.post('/register', userController.createNewUser);
 
-export default userRouter;
+// Route for logging in
+userRouter.post('/login', userController.login);
+
+module.exports = userRouter
