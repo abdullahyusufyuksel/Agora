@@ -1,6 +1,7 @@
 const isEmpty = require('is-empty');
 const bcrypt = require('bcrypt');
 const User = require("../models/userModel.js");
+const jwt = require('jsonwebtoken');
 const config = require('../../config/config.js');
 
 const validateInputReg = async function(newUser)
@@ -38,12 +39,12 @@ const validateInputLogin = async function(user)
 {
   let isValid = true;
 
-  if(isEmpty(newUser.username))
+  if(isEmpty(user.email))
   {
     isValid = false;
   }
 
-  if(isEmpty(newUser.password))
+  if(isEmpty(user.password))
   {
     isValid = false;
   }
@@ -105,8 +106,8 @@ const createNewUser = async function(req, res)
 };
 const login = async function(req, res)
 {
-  const existingUser = req.body;
-  const isValid = await validateInputLogin(existingUser);
+  var existingUser = req.body;
+  let isValid = await validateInputLogin(existingUser);
   if (!isValid) 
   {
     return res.status(400).send(
@@ -137,7 +138,30 @@ const login = async function(req, res)
               });            
           } else
           {
-            
+              // Create JWT payload
+              const payload =
+              {
+                id: data.id,
+                username: data.username
+              };
+
+              // Sign JWT 
+              jwt.sign
+              (
+                payload,
+                config.secretOrKey,
+                {
+                  expiresIn: 3600 // expires in an hour
+                },
+                function(err, token)
+                {
+                  res.json(
+                    {
+                      success: true,
+                      token: "Bearer " + token
+                    });
+                }
+              );
           }
         });
       }
