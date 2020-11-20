@@ -31,6 +31,12 @@ const validateInputReg = async function(newUser)
   {
     isValid = false;
   }
+
+  if(isEmpty(newUser.isAdmin))
+  {
+    isValid = false;
+  }
+
   return isValid;
 
 }
@@ -158,7 +164,8 @@ const login = async function(req, res)
                   res.json(
                     {
                       success: true,
-                      token: "Bearer " + token
+                      token: "Bearer " + token,
+                      data
                     });
                 }
               );
@@ -167,10 +174,14 @@ const login = async function(req, res)
       }
     });
 
+};
+const getProfile = async function(req, res)
+{
+  return res.status(200).send(req.user);
 }
-
 module.exports = 
 {
     createNewUser,
-    login
+    login,
+    getProfile
 };
