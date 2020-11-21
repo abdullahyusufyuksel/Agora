@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const config = require('../config/config.js');
 const morgan = require('morgan');
-const Router = require('./routes/Router.js');
+const Router = require('./Router.js');
 const app = express();
 
 // Logging

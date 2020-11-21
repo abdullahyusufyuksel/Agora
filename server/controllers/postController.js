@@ -1,5 +1,7 @@
 const fs = require('fs');
+const path = require('path');
 const Post = require("../models/postModel.js");
+const isEmpty = require('is-empty');
 
 const validatePostParams = async function(newPost)
 {
@@ -26,6 +28,7 @@ const createNewPost = async function(req, res)
     {
         author: req.user.username,
         message: req.body.message,
+        date: Date.now(),
         upvotes: 0
     }
     
@@ -33,9 +36,9 @@ const createNewPost = async function(req, res)
         .then(function(data)
         {
             let mediaID = data._id;
-            const imageFileName = './postMedia/' + mediaID + '.png';
-            fs.writeFileSync(imageFileName, imageBuffer, 'base64');
-            res.json(data);
+            const imageFileName = 'postMedia/' + mediaID + path.extname(req.file.path);
+            fs.renameSync(req.file.path, imageFileName);
+            res.status(200).send(data);
         })
         .catch(function(err)
         {
@@ -43,7 +46,27 @@ const createNewPost = async function(req, res)
             res.status(400).send(err);
         });
 }
+
+const getAllPosts = async function(req, res)
+{
+  Post.find({})
+    .then(function(data)
+    {
+      res.status(200).send(data);
+    });
+}
+
+const clearDatabase = async function(req, res)
+{
+  Post.remove()
+    .then(function(data)
+    {
+      res.status(200).send('Database cleared');
+    });
+}
 module.exports =
 {
-    createNewPost
+    createNewPost,
+    getAllPosts,
+    clearDatabase
 };
