@@ -4,7 +4,8 @@ const postSchema = new mongoose.Schema(
 {
     author: {type: String, required: true},
     message: {type: String, required: true},
-    comments: [String],
+    title: {type: String, required:true},
+    comments: [{type: String}],
     upvotes: {type: Number, required: true},
     date: {type: Date, required:true}
 });
