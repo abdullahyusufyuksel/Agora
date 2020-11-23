@@ -44,8 +44,21 @@ Router.post('/login', userController.login);
 Router.post('/upload', passport.authenticate('jwt', {session: false}), upload.single('image'), postController.createNewPost);
 
 // Route for getting all posts
-Router.get('/',passport.authenticate('jwt', {session: false}), postController.getAllPosts);
+Router.get('/', postController.getAllPosts);
 
 // Route for clearing database - DO NOT LINK TO FRONTEND
 Router.delete('/', postController.clearDatabase);
+
+// Route for searching for a title with the matching search parameter
+Router.get('/search', postController.searchTitles);
+
+// Route for upvoting a post
+Router.post('/upvotePost/:postID', passport.authenticate('jwt', {session: false}), upload.single('image'), postController.upvotePost)
+
+// COMMENT CONTROLLER ROUTES
+// Route for creating a comment
+Router.post('/post/:postID', passport.authenticate('jwt', {session: false}), commentController.createNewComment);
+
+// Route for upvoting a comment
+Router.post('/upvoteComment/:postID/:commentID', passport.authenticate('jwt', {session: false}), commentController.upvoteComment);
 module.exports = Router

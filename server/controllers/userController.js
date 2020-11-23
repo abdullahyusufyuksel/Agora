@@ -59,8 +59,8 @@ const validateInputLogin = async function(user)
 
 const createNewUser = async function(req, res) 
 {
-    // The request body didn't match correct params - This should never really happen with a front-end.
     var newUser = req.body;
+    console.log(newUser);
     let isValid = await validateInputReg(newUser);
     if (!isValid) {
       return res.status(400).send(
