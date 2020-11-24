@@ -50,20 +50,22 @@ export default class Login extends React.Component{
                             Sources
                         </Form.Label>
                         <Form.Control placeholder="Enter sources of support or information." />
-                        <div class="text-right">
-                            <Button onClick={this.click} variant="success">
+                    </Form.Group>
+                    <div class="button-right">
+                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-2 text-right" role="group" aria-label="First group">
+                            <Button onClick={this.click}>
                                 Add
                             </Button>
                         </div>
-                    </Form.Group>
-                    
-
-
-                    <div class="text-center">
-                        <Button onClick={this.click}>
-                            Submit
-                        </Button>
+                        <div class="btn-group mr-2 text-right" role="group" aria-label="Second group">
+                            <Button onClick={this.click}>
+                                Submit
+                            </Button>
+                        </div>
                     </div>
+                    </div>
+                    
                 </Form>
             </div>
         );

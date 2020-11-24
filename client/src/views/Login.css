@@ -12,3 +12,8 @@
     padding: 100px;
     margin: auto;
 }
+
+.button-right{
+    display:flex;
+    justify-content: flex-end;
+    }
