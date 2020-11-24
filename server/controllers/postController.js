@@ -81,6 +81,15 @@ const getAllPosts = async function(req, res)
     });
 }
 
+const getPostById = async function(req, res)
+{
+  Post.findById(req.params.id)
+    .then(function(data)
+    {
+      res.status(200).send(data);
+    });
+}
+
 const clearDatabase = async function(req, res)
 {
   Post.remove()
@@ -135,5 +144,6 @@ module.exports =
     getAllPosts,
     clearDatabase,
     searchTitles,
-    upvotePost
+    upvotePost,
+    getPostById
 };

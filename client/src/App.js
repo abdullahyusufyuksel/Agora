@@ -26,9 +26,6 @@ function App() {
         <LinkContainer to="/profile">
           <Nav.Link>Profile</Nav.Link>
         </LinkContainer>
-        <LinkContainer to="/postview">
-          <Nav.Link>Post Example</Nav.Link>
-        </LinkContainer>
         <LinkContainer to="/uploadview">
           <Nav.Link>Upload</Nav.Link>
         </LinkContainer>
