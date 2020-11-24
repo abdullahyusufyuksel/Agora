@@ -3,3 +3,7 @@
     left: 50%;
     transform: translateX(-50%);
 }
+
+.logoSpacing{
+    width: 200px;
+  }
