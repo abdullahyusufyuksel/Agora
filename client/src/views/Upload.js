@@ -51,7 +51,7 @@ export default class Login extends React.Component{
                         </Form.Label>
                         <Form.Control placeholder="Enter sources of support or information." />
                         <div class="text-right">
-                            <Button onClick={this.click}>
+                            <Button onClick={this.click} variant="success">
                                 Add
                             </Button>
                         </div>

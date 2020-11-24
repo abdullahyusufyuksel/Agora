@@ -1,16 +1,18 @@
 import { LinkContainer } from 'react-router-bootstrap';
 import Routes from './Routes.js';
 import { Nav, Navbar, NavItem, Image} from 'react-bootstrap';
+import './App.css';
+
 function App() {
-
-
 
   return (
     <div className="App">
     <Navbar bg="dark" variant="dark">
+      <div class="navbar-nav abs-center-x">
       <LinkContainer to="/">
         <Navbar.Brand>Agora</Navbar.Brand>
       </LinkContainer>
+      </div>
 
       <Nav class="navbar-nav ml-auto">
         <LinkContainer to="/login">
@@ -18,9 +20,6 @@ function App() {
         </LinkContainer>
         <LinkContainer to="/profile">
           <Nav.Link>Profile</Nav.Link>
-        </LinkContainer>
-        <LinkContainer to="/register">
-          <Nav.Link>Register</Nav.Link>
         </LinkContainer>
         <LinkContainer to="/postview">
           <Nav.Link>Post Example</Nav.Link>
