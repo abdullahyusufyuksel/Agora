@@ -46,6 +46,10 @@ Router.post('/upload', passport.authenticate('jwt', {session: false}), upload.si
 // Route for getting all posts
 Router.get('/', postController.getAllPosts);
 
+// Route for getting post by id 
+// @access PUBLIC
+Router.get('/post/:postID', postController.getPostById)
+
 // Route for clearing database - DO NOT LINK TO FRONTEND
 Router.delete('/', postController.clearDatabase);
 
