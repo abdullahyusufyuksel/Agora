@@ -1,16 +1,23 @@
 import { LinkContainer } from 'react-router-bootstrap';
 import Routes from './Routes.js';
 import { Nav, Navbar, NavItem, Image} from 'react-bootstrap';
+import './App.css';
+import AgoraIcon from "./Agora Logo.svg"
+
 function App() {
-
-
 
   return (
     <div className="App">
     <Navbar bg="dark" variant="dark">
+      <div class="navbar-nav abs-center-x">
       <LinkContainer to="/">
-        <Navbar.Brand>Agora</Navbar.Brand>
+        <Navbar.Brand>
+        <a href="#">
+          <img class="logoSpacing" src={AgoraIcon} />
+        </a>        
+          </Navbar.Brand>
       </LinkContainer>
+      </div>
 
       <Nav class="navbar-nav ml-auto">
         <LinkContainer to="/login">
@@ -18,12 +25,6 @@ function App() {
         </LinkContainer>
         <LinkContainer to="/profile">
           <Nav.Link>Profile</Nav.Link>
-        </LinkContainer>
-        <LinkContainer to="/register">
-          <Nav.Link>Register</Nav.Link>
-        </LinkContainer>
-        <LinkContainer to="/postview">
-          <Nav.Link>Post Example</Nav.Link>
         </LinkContainer>
         <LinkContainer to="/uploadview">
           <Nav.Link>Upload</Nav.Link>

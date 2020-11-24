@@ -5,8 +5,8 @@ const commentSchema = new mongoose.Schema(
     post: {type: String, required:true},
     author: {type: String, required: true},
     message: {type: String, required: true},
-    comments: [String],
-    upvotes: {type: Int, required: true}    
+    upvotes: {type: Number, required: true}, 
+    date: {type: Date, required:true}
 });
 
-export default mongoose.model('COMMENTS', commentSchema);
+module.exports = mongoose.model('COMMENTS', commentSchema);

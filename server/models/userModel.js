@@ -7,10 +7,12 @@ const userSchema = new mongoose.Schema(
     firstName: {type:String, required:true},
     lastName: {type:String, required:true},
     email: {type:String, required:true},
+    isAdmin: {type:Boolean, required:true},
     profilePicture: {type: String},
-    posts: [String],
-    comments: [String],
-    postsUpvoted: [String]
+    posts: [{type: String, required: true}],
+    comments: [{type: String, required: true}],
+    postsUpvoted: [{type: String, required: true}],
+    commentsUpvoted: [{type: String, required:true}]
 });
 
-export default mongoose.model('USERS', userSchema);
+module.exports = mongoose.model('USERS', userSchema);

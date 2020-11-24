@@ -1,0 +1,9 @@
+.abs-center-x {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.logoSpacing{
+    width: 200px;
+  }

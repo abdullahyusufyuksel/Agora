@@ -4,8 +4,10 @@ const postSchema = new mongoose.Schema(
 {
     author: {type: String, required: true},
     message: {type: String, required: true},
-    comments: [String],
-    upvotes: {type: Int, required: true}
+    title: {type: String, required:true},
+    comments: [{type: String}],
+    upvotes: {type: Number, required: true},
+    date: {type: Date, required:true}
 });
 
-export default mongoose.model('POSTS', postSchema);
+module.exports = mongoose.model('POSTS', postSchema);

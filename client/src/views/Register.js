@@ -22,14 +22,14 @@ export default class Register extends React.Component{
                         <Form.Label>
                             First Name
                         </Form.Label>
-                        <Form.Control/>
+                        <Form.Control placeholder="Enter your First Name"/>
                     </Form.Group>
 
                     <Form.Group>
                         <Form.Label>
                             Last Name
                         </Form.Label>
-                        <Form.Control/>
+                        <Form.Control placeholder="Enter your Last Name"/>
                     </Form.Group>
 
                     <Form.Group>
