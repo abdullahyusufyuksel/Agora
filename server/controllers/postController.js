@@ -166,6 +166,6 @@ module.exports =
     clearDatabase,
     searchTitles,
     upvotePost,
-    removeUpvote
+    removeUpvote,
     getPostById
 };

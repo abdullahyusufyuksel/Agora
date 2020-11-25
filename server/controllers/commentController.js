@@ -68,9 +68,18 @@ const removeUpvote = async function(req, res)
     User(data).save();
   });
 }
+
+const getCommentsByPostID = async function(req, res)
+{
+    Comment.find({post: req.params.postID}).then(function(data)
+    {
+        res.status(200).send(data);
+    });
+}
 module.exports =
 {
     createNewComment,
     upvoteComment,
-    removeUpvote
+    removeUpvote,
+    getCommentsByPostID
 };

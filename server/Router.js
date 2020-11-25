@@ -116,4 +116,7 @@ Router.post('/upvoteComment/:postID/:commentID', passport.authenticate('jwt', {s
 // Route for removing an upvote from a comment
 Router.post('/removeCommentUpvote/:commentID', passport.authenticate('jwt', {session: false}),  commentController.removeUpvote);
 
+// Route for getting comments by postID
+Router.get('/getComments/:postID', commentController.getCommentsByPostID);
+
 module.exports = Router
