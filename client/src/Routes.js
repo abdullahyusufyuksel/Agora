@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useParams, useRouteMatch } from "react-router-dom";
 import {Image} from 'react-bootstrap';
 
 import Home from "./views/Home";
@@ -24,8 +24,8 @@ export default function Routes() {
       <Route exact path="/register">
         <Register />
       </Route>
-      <Route exact path="/postview">
-        <Post/>
+      <Route path="/post/:postID">
+        <Post postID={useParams()}/>
       </Route>
       <Route exact path="/uploadview">
         <Upload/>

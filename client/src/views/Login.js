@@ -8,6 +8,9 @@ export default class Login extends React.Component{
     click(){
         window.location = "/";
     }
+    clickRegister(){
+        window.location = "/register";
+    }
     render(){
         return (
             <div className="login">
@@ -30,10 +33,21 @@ export default class Login extends React.Component{
                         </Form.Label>
                         <Form.Control type ="password" placeholder="Password" />
                     </Form.Group>
-                    
-                    <Button onClick={this.click}>
-                        Log in
-                    </Button>
+                    <div class="button-right">
+                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group mr-2" role="group" aria-label="First group">
+                            <Button onClick={this.click}>
+                                Log in
+                            </Button>
+                        </div>
+                        <div class="btn-group mr-2" role="group" aria-label="Second group">
+                            <Button onClick={this.clickRegister}>
+                                Register
+                            </Button>
+                        </div>
+                    </div>
+                    </div>
+
                 </Form>
             </div>
         );
