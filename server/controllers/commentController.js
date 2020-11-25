@@ -10,6 +10,7 @@ const createNewComment = async function(req, res)
         author: req.user.username,
         message: req.body.message,
         upvotes: 0,
+        for: req.body.for,
         date: Date.now()
     }
 
@@ -47,8 +48,29 @@ const upvoteComment = async function(req, res)
     
 }
 
+const removeUpvote = async function(req, res)
+{
+  Comment.findOne({_id: req.params.commentID}).then(function(data)
+  {
+      data.upvotes--;
+      Post(data).save();
+  });
+
+  User.findOne({username: req.user.username}).then(function(data)
+  {
+    console.log(data.commentsUpvoted);
+    data.commentsUpvoted = data.commentsUpvoted.filter(function(value, index, arr)
+    {
+        return value != req.params.commentID;
+    });
+    console.log(data.commentsUpvoted);
+
+    User(data).save();
+  });
+}
 module.exports =
 {
     createNewComment,
-    upvoteComment
+    upvoteComment,
+    removeUpvote
 };

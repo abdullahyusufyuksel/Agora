@@ -48,6 +48,7 @@ const createNewPost = async function(req, res)
         author: req.user.username,
         message: req.body.message,
         title: req.body.title,
+        sources: req.body.sources,
         date: Date.now(),
         upvotes: 0,
     }
@@ -58,6 +59,8 @@ const createNewPost = async function(req, res)
             let mediaID = data._id;
             const imageFileName = 'postMedia/' + mediaID + path.extname(req.file.path);
             fs.renameSync(req.file.path, imageFileName);
+            data.postMediaFilePath = imageFileName;
+            Post(data).save();
             User.findOne({username: req.user.username}).then(function(data)
             {
               data.posts.push(mediaID);
@@ -114,19 +117,37 @@ const upvotePost = async function(req, res)
 {
   Post.findOne({_id: req.params.postID}).then(function(data)
   {
-    console.log(data);
       data.upvotes++;
       Post(data).save();
   });
 
   User.findOne({username: req.user.username}).then(function(data)
   {
-    console.log(data)
       data.postsUpvoted.push(req.params.postID);
       User(data).save();
       res.status(200).send(data);
   });
+}
 
+const removeUpvote = async function(req, res)
+{
+  Post.findOne({_id: req.params.postID}).then(function(data)
+  {
+      data.upvotes--;
+      Post(data).save();
+  });
+
+  User.findOne({username: req.user.username}).then(function(data)
+  {
+    console.log(data.postsUpvoted);
+    data.postsUpvoted = data.postsUpvoted.filter(function(value, index, arr)
+    {
+        return value != req.params.postID;
+    });
+    console.log(data.postsUpvoted);
+
+    User(data).save();
+  });
 }
 
 module.exports =
@@ -135,5 +156,6 @@ module.exports =
     getAllPosts,
     clearDatabase,
     searchTitles,
-    upvotePost
+    upvotePost,
+    removeUpvote
 };
