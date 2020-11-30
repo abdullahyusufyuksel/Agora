@@ -6,6 +6,7 @@ const postSchema = new mongoose.Schema(
     message: {type: String, required: true},
     title: {type: String, required:true},
     comments: [{type: String}],
+    sources: [{type: String}],
     upvotes: {type: Number, required: true},
     date: {type: Date, required:true}
 });

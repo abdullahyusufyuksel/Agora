@@ -82,8 +82,9 @@ const getAllPosts = async function(req, res)
 }
 
 const getPostById = async function(req, res)
-{
-  Post.findById(req.params.id)
+{ 
+  let postID = req.params.postID
+  Post.findById(postID)
     .then(function(data)
     {
       res.status(200).send(data);

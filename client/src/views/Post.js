@@ -1,35 +1,44 @@
 import { ListGroup, Navbar, NavDropdown, Nav, Container, Row, Col, Image, InputGroup, FormControl, Button } from 'react-bootstrap';
 import React from "react";
 import { getPostbyID } from '../functions/postFunctions'
+import { Route, Switch, useParams, useRouteMatch} from "react-router-dom";
 import "./Post.css"
 
 const Post = (props) => {
 
-    const postData = getPostbyID(props.postID)
+    let { postID } = useParams();
 
-    const sourceList = postData.sources.map( (source) => {
-        return(
-            <p>
-                <a href={source}> <i> {">"} {source}</i></a>
-            </p>
-        )
-    });
+    getPostbyID(postID)
+    .then(
+       let 
+    )
 
-    const forCommentList = postData.comments.map( (comment) => {
-        return(
-            <ListGroup.Item> 
-                {comment.message}
-            </ListGroup.Item>
-        )
-    });
+    // const sourceList = postData.sources.map( (source) => {
+    //     return(
+    //         <p>
+    //             <a href={source}> <i> {">"} {source}</i></a>
+    //         </p>
+    //     )
+    // });
+   
+    
 
-    const againstCommentList = postData.comments.map( (comment) => {
-        return(
-            <ListGroup.Item> 
-                {comment.message}
-            </ListGroup.Item>
-        )
-    });
+    // const forCommentList = postData.comments.map( (comment) => {
+
+    //     return(
+    //         <ListGroup.Item> 
+    //             {comment.message}
+    //         </ListGroup.Item>
+    //     )
+    // });
+
+    // const againstCommentList = postData.comments.map( (comment) => {
+    //     return(
+    //         <ListGroup.Item> 
+    //             {comment.message}
+    //         </ListGroup.Item>
+    //     )
+    // });
 
 
     return (
@@ -49,7 +58,7 @@ const Post = (props) => {
 
                 <Row>
                     <Col className="source">
-                        {sourceList}
+                        {/* {sourceList} */}
                     </Col>
                 </Row>
 
@@ -77,7 +86,7 @@ const Post = (props) => {
                             <ListGroup.Item className="comment-header" variant="success">
                                 For
                             </ListGroup.Item>
-                            {forCommentList}
+                            {/* {forCommentList} */}
                             
                         </ListGroup>
 
