@@ -69,26 +69,24 @@ const createNewUser = async function(req, res)
         }
       );
     }
-    await User.findOne({email: newUser.email})
+    await User.findOne(
+      {
+        $or:[        
+          {username: newUser.username},
+          {email: newUser.email}
+        ]
+      }
+      
+      )
       .then(function(data)
       {
         if(data)
         {
-          return res.status(400).send(
-            {
-              error: "User already exists"
-            });
-        }
-      });
-    await User.findOne({ username: newUser.username })
-      .then(function(data)
-      {
-        if(data)
-        {
-          return res.status(400).send(
+          res.status(400).send(
           {
             error: "User already exists",
-          });          
+          });
+          return;     
         } else
         {
           bcrypt.genSalt(10, function(err, salt)
@@ -134,6 +132,7 @@ const login = async function(req, res)
           });
       } else
       {
+        console.log(data);
         bcrypt.compare(existingUser.password, data.password, function(err, result)
         {
           if(!result)

@@ -57,7 +57,7 @@ const userUpload = multer(
     USER CONTROLLER ROUTES
 */
 
-// Route for viewing profile
+// Route for viewing 
 Router.get('/profile', passport.authenticate('jwt', {session: false}), userController.getProfile);
 
 // Route for registering
@@ -67,7 +67,7 @@ Router.post('/register', userController.createNewUser);
 Router.post('/login', userController.login);
 
 // Route for getting user by username
-Router.get('/profile/:username', passport.authenticate('jwt', {session: false}), userController.getUserByUsername)
+Router.get('/profile/:username', userController.getUserByUsername)
 
 // Route for updating user bio
 Router.post('/updateBio', passport.authenticate('jwt', {session: false}), userController.updateBio);
