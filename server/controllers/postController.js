@@ -49,6 +49,7 @@ const createNewPost = async function(req, res)
         message: req.body.message,
         title: req.body.title,
         sources: req.body.sources,
+        postMediaFilePath: "NULL",
         date: Date.now(),
         upvotes: 0,
     }
