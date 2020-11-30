@@ -33,6 +33,7 @@ export default class Login extends React.Component{
                         </Form.Label>
                         <Form.Control type ="password" placeholder="Password" />
                     </Form.Group>
+                    <div class="button-right">
                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-group mr-2" role="group" aria-label="First group">
                             <Button onClick={this.click}>
@@ -44,6 +45,7 @@ export default class Login extends React.Component{
                                 Register
                             </Button>
                         </div>
+                    </div>
                     </div>
 
                 </Form>
