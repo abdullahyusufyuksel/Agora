@@ -5,12 +5,15 @@ const config = require('../config/config.js');
 const morgan = require('morgan');
 const Router = require('./Router.js');
 const app = express();
-
+const cors = require('cors');
 // Logging
 app.use(morgan('dev'));
 
 // Middleware
 app.use(express.json());
+
+// CORS handling 
+app.use(cors());
 
 // Connect to Atlas
 mongoose.connect(config.URI)
