@@ -17,7 +17,7 @@ export default class Login extends React.Component{
                 <Form className = "loginForm">
                     <h1 className="text-center">
                         <span classname="font-weight-bold">
-                            Agora
+                            Log In
                         </span>
                     </h1>
                     <Form.Group>
