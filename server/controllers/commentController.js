@@ -4,15 +4,17 @@ const User = require("../models/userModel.js");
 
 const createNewComment = async function(req, res)
 {
+    let post = await Post.findOne({_id: req.params.postID})
     const newComment = 
     {
-        post: (await Post.findOne({_id: req.params.postID}))._id,
+        post: post._id,
         author: req.user.username,
         message: req.body.message,
         upvotes: 0,
         for: req.body.for,
         date: Date.now()
     }
+
 
     new Comment(newComment).save()
         .then(function(data)
