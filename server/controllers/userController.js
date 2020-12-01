@@ -211,7 +211,7 @@ const changeProfilePic = async function(req, res)
     let mediaID = data._id;
     const imageFileName = '../../client/src/profilePics/' + mediaID + path.extname(req.file.path);
     fs.renameSync(path.resolve(__dirname, '../' + req.file.path), req.resolve(__dirname, imageFileName));
-    data.profilePicture = req.resolve(__dirname, imageFileName);
+    data.profilePicture = imageFileName;
     User(data).save();
     res.status(200).send(data);
   });
