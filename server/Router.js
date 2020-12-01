@@ -75,6 +75,8 @@ Router.post('/updateBio', passport.authenticate('jwt', {session: false}), userCo
 // Route for changing profile pic
 Router.post('/changeProfilePicture', passport.authenticate('jwt', {session: false}), userUpload.single('image'), userController.changeProfilePic)
 
+// Route for changing password
+Router.post('/changePassword', passport.authenticate('jwt', {session: false}), userController.changePassword);
 /*
     POST CONTROLLER ROUTES
 */
