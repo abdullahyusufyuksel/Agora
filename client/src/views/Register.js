@@ -17,12 +17,7 @@ export default class Register extends React.Component{
             lastName: '',
             email: '',
             biography: '',
-            isAdmin: false,
-            profilePicture: '',
-            posts: [''],
-            comments: [''],
-            postsUpvoted: [''],
-            commentsUpvoted: [''] 
+            isAdmin: false
         };
     }
 
@@ -31,7 +26,7 @@ export default class Register extends React.Component{
     onSubmit(e){
         e.preventDefault();
     
-        const { username, password, firstName, lastName, email } = this.state;
+        //const { username, password, firstName, lastName, email } = this.state;
        
         console.log(`Form submitted: `);
         console.log(`Username: ${this.state.username}`);
@@ -47,13 +42,8 @@ export default class Register extends React.Component{
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email,
-            biography: '',
-            isAdmin: false,
-            profilePicture: '',
-            posts: [''],
-            comments: [''],
-            postsUpvoted: [''],
-            commentsUpvoted: ['']
+            biography: ' ',
+            isAdmin: false
           };
 
         axios.post('http://localhost:5000/register', newUser)
@@ -67,12 +57,7 @@ export default class Register extends React.Component{
             firstName: '',
             email: '',
             biography: '',
-            isAdmin: false,
-            profilePicture: '',
-            posts: [''],
-            comments: [''],
-            postsUpvoted: [''],
-            commentsUpvoted: ['']
+            isAdmin: false
         })
 
         //window.location = "/login";

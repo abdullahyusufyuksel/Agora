@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import "./Post.css"
 import axios from 'axios';
 
-const testImg = require("./../postMedia/5fc570a187776309eea6ec17.png")
+//const testImg = require("./../postMedia/5fc570a187776309eea6ec17.png")
 
 
 export class Post extends Component {
@@ -75,7 +75,6 @@ export class Post extends Component {
                         <Image className="profile-icon" src="https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg" roundedCircle />
                         {this.state.currentPost.author}
                     </div>
-                    <img src={require("./../postMedia/5fc570a187776309eea6ec17.png")}/>
 
                     <Container className="details">
                         <Row>
