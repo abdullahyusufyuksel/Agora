@@ -11,7 +11,7 @@ const Router = express.Router();
 const postStorage = multer.diskStorage(
     {
         destination: function(req, file, cb) {
-            cb(null, '../client/src/postMedia/');
+            cb(null, './postMedia/');
         }, 
         filename: function(req, file, cb) 
         {
@@ -34,7 +34,7 @@ const postUpload = multer(
 const userStorage = multer.diskStorage(
     {
         destination: function(req, file, cb) {
-            cb(null, '../client/src/profilePics/');
+            cb(null, './profilePics/');
         }, 
         filename: function(req, file, cb) 
         {

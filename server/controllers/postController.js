@@ -49,7 +49,7 @@ const createNewPost = async function(req, res)
         message: req.body.message,
         title: req.body.title,
         sources: req.body.sources,
-        postMediaFilePath: "NULL",
+        postMediaFilePath: req.file.path,
         date: Date.now(),
         upvotes: 0,
     }
@@ -58,10 +58,6 @@ const createNewPost = async function(req, res)
         .then(function(data)
         {
             let mediaID = data._id;
-            const imageFileName = '../../client/src/postMedia/' + mediaID + path.extname(req.file.path);
-            fs.renameSync(path.resolve(__dirname, '../' + req.file.path), path.resolve(__dirname, imageFileName));
-            data.postMediaFilePath = '../postMedia/' + mediaID + path.extname(req.file.path);
-            Post(data).save();
             User.findOne({username: req.user.username}).then(function(data)
             {
               data.posts.push(mediaID);
