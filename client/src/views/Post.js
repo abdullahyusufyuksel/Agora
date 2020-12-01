@@ -3,19 +3,40 @@ import React, { Component } from "react";
 import "./Post.css"
 import axios from 'axios';
 
-//const testImg = require("./../postMedia/5fc570a187776309eea6ec17.png")
 
 
 export class Post extends Component {
 
     state = {
-        "currentPost" : null,
+        "currentPost" : "",
         "comments" : [],
         "sourceList" : "",
         "forCommentList" : "",
-        "agaisntCommentList" : ""
+        "agaisntCommentList" : "",
+        "newComment" : {
+            "message" : "",
+            "for" : null
+        }
 
     }
+
+    onChange = (e) => this.setState( {newComment : { message: e.target.value }});
+
+    submitFor = (e) => {
+        let postID = this.props.match.params.postID
+        e.preventDefault();
+        this.setState({ newComment: {for: true}});
+        axios.post(`http://localhost:5000/commentOnPost/${postID}`, this.state.newComment)
+        this.setState({newComment:{message: ""}})
+      }
+
+      submitAgaisnt = (e) => {
+        let postID = this.props.match.params.postID
+        e.preventDefault();
+        this.setState({ newComment: {for: false}});
+        axios.post(`http://localhost:5000/commentOnPost/${postID}`, this.state.newComment)
+        this.setState({newComment:{message: ""}})
+      }
 
     componentDidMount() {
 
@@ -36,7 +57,7 @@ export class Post extends Component {
 
     render() {
         
-        if (this.state.currentPost === null){
+        if (this.state.currentPost === ""){
             return (
                 <div className="comment-header">
                     <h3>
@@ -45,6 +66,8 @@ export class Post extends Component {
                 </div>
             )
         } else {
+
+            // var MyImage = './../postMedia/profile.jpg'
 
             const forCommentList = 
             this.state.comments.map((comment) => {
@@ -75,6 +98,8 @@ export class Post extends Component {
                         <Image className="profile-icon" src="https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg" roundedCircle />
                         {this.state.currentPost.author}
                     </div>
+
+                    <img alt="post iamge"src={'http://localhost:5000/postMedia/profile.jpg'}/>
 
                     <Container className="details">
                         <Row>
@@ -147,13 +172,16 @@ export class Post extends Component {
                         <Row>
                             <InputGroup className="comment-bar"> 
                                 <FormControl
+                                name="commentField"
                                 placeholder="Comment..."
                                 aria-label="comment"
                                 aria-describedby="basic-addon2"
+                                onChange={this.onChange}
+                                value={this.state.newComment.message}
                                 />
                                 <InputGroup.Append>
-                                    <Button variant="success" onSubmit={this.submitFor}>For</Button>
-                                    <Button variant="danger" onSubmit={this.submitAgaisnt}>Against</Button>
+                                    <Button variant="success" onClick={this.submitFor}>For</Button>
+                                    <Button variant="danger" onClick={this.submitAgaisnt}>Against</Button>
                                 </InputGroup.Append>
 
                             </InputGroup>

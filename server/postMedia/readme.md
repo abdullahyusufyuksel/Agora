@@ -1,1 +1,0 @@
-# This dir is for post image storage
