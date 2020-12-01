@@ -58,9 +58,9 @@ const createNewPost = async function(req, res)
         .then(function(data)
         {
             let mediaID = data._id;
-            const imageFileName = 'postMedia/' + mediaID + path.extname(req.file.path);
-            fs.renameSync(req.file.path, imageFileName);
-            data.postMediaFilePath = imageFileName;
+            const imageFileName = '../../client/src/postMedia/' + mediaID + path.extname(req.file.path);
+            fs.renameSync(path.resolve(__dirname, '../' + req.file.path), path.resolve(__dirname, imageFileName));
+            data.postMediaFilePath = path.resolve(__dirname, imageFileName);
             Post(data).save();
             User.findOne({username: req.user.username}).then(function(data)
             {
