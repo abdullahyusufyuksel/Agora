@@ -24,9 +24,7 @@ export default function Routes() {
       <Route exact path="/register">
         <Register />
       </Route>
-      <Route path="/post/:postID">
-        <Post postID={useParams()}/>
-      </Route>
+      <Route path="/post/:postID" component={Post}/>
       <Route exact path="/uploadview">
         <Upload/>
       </Route>
