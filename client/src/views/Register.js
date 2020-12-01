@@ -36,13 +36,13 @@ export default class Register extends React.Component{
         console.log(`First Name: ${this.state.email}`);
 
 
-        const newUser = {
+        var newUser = {
             username: this.state.username,
             password: this.state.password,
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email,
-            biography: ' ',
+            biography: 'NULL',
             isAdmin: false
           };
 
