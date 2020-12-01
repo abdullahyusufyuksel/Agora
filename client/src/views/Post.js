@@ -3,15 +3,17 @@ import React, { Component } from "react";
 import "./Post.css"
 import axios from 'axios';
 
+const testImg = require("./../postMedia/5fc570a187776309eea6ec17.png")
+
 
 export class Post extends Component {
 
     state = {
         "currentPost" : null,
-        "comments" : null,
-        "sourceList" : null,
-        "forCommentList" : null,
-        "agaisntCommentList" : null
+        "comments" : [],
+        "sourceList" : "",
+        "forCommentList" : "",
+        "agaisntCommentList" : ""
 
     }
 
@@ -26,50 +28,14 @@ export class Post extends Component {
             this.setState({currentPost : res.data})
         });
 
-        if (this.state.currentPost !== null) {
-            const sourceList = this.state.currentPost.sources.map( (source) => 
-                (
-                    <p>
-                        <a href={source}> <i> {">"} {source}</i></a>
-                    </p>
-                )
-            );
-    
-            this.setState({sourceList: sourceList})
-    
-            axios.get(`http://localhost:5000/getComments/${postID}`)
-            .then(res =>{
-                this.setState({comments : res.data})
-            });
-    
-             const forCommentList = this.state.comments.filter( (comment) => {
-                if (comment.for) {
-                return(
-                        <ListGroup.Item> 
-                            {comment.message}
-                        </ListGroup.Item>
-                    )
-                }
-            });
-    
-            this.setState({forCommentList: forCommentList})
-    
-    
-            const againstCommentList = this.state.comments.filter( (comment) => {
-                if (!comment.for) {
-                return(
-                        <ListGroup.Item> 
-                            {comment.message}
-                        </ListGroup.Item>
-                    )
-                }
-            });
-    
-            this.setState({againstCommentList: againstCommentList})
-        }
+        axios.get(`http://localhost:5000/getComments/${postID}`)
+        .then(res =>{
+            this.setState({comments : res.data})
+        });
     }
 
     render() {
+        
         if (this.state.currentPost === null){
             return (
                 <div className="comment-header">
@@ -79,14 +45,37 @@ export class Post extends Component {
                 </div>
             )
         } else {
-        
+
+            const forCommentList = 
+            this.state.comments.map((comment) => {
+                if (comment.for) {
+                    return(
+                            <ListGroup.Item> 
+                                ({comment.upvotes}) <i>{comment.author}</i> {comment.message}
+                            </ListGroup.Item>
+                        )
+                }
+            });
+            
+            const againstCommentList = 
+            this.state.comments.map((comment) => {
+                if (!comment.for) {
+                    return(
+                            <ListGroup.Item> 
+                                ({comment.upvotes}) <i>{comment.author}</i> {comment.message}
+                            </ListGroup.Item>
+                        )
+                }
+            });
+
+
             return (
                 <div className="Post" >
                     <div className = "profile-header">
                         <Image className="profile-icon" src="https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg" roundedCircle />
                         {this.state.currentPost.author}
                     </div>
-                    <Image fluid className="post-img" src="https://cdn.cnn.com/cnnnext/dam/assets/200622104651-black-lives-matter-support-impact-0613-large-169.jpg"/>
+                    <img src={require("./../postMedia/5fc570a187776309eea6ec17.png")}/>
 
                     <Container className="details">
                         <Row>
@@ -99,11 +88,12 @@ export class Post extends Component {
 
                         <Row>
                             <Col className="source">
+                                <i>Souces:</i>
                                 { 
                                     this.state.currentPost.sources.map( (source) => 
                                         (
                                             <p>
-                                                <a href={source}> <i> {">"} {source}</i></a>
+                                                <a href={source}> <i>{source}</i></a>
                                             </p>
                                         )
                                     )
@@ -136,7 +126,8 @@ export class Post extends Component {
                                     <ListGroup.Item className="comment-header" variant="success">
                                         For
                                     </ListGroup.Item>
-                                    {this.state.forCommentList}
+
+                                    {forCommentList}
                                     
                                 </ListGroup>
 
@@ -147,12 +138,9 @@ export class Post extends Component {
                                     <ListGroup.Item className="comment-header" variant="danger">
                                         Against
                                     </ListGroup.Item>
-                                    <ListGroup.Item>
-                                        (1) Comment 2
-                                    </ListGroup.Item>
-                                    <ListGroup.Item>
-                                        (0) Comment 3
-                                    </ListGroup.Item>
+
+                                    {againstCommentList}
+
                                 </ListGroup>
 
                             </Col>
@@ -165,8 +153,8 @@ export class Post extends Component {
                                 aria-describedby="basic-addon2"
                                 />
                                 <InputGroup.Append>
-                                    <Button variant="success">For</Button>
-                                    <Button variant="danger">Against</Button>
+                                    <Button variant="success" onSubmit={this.submitFor}>For</Button>
+                                    <Button variant="danger" onSubmit={this.submitAgaisnt}>Against</Button>
                                 </InputGroup.Append>
 
                             </InputGroup>

@@ -58,7 +58,12 @@ const createNewPost = async function(req, res)
         .then(function(data)
         {
             let mediaID = data._id;
+            console.log("yes")
+            console.log(imageFileName)
+            console.log(req.file.path)
             const imageFileName = 'postMedia/' + mediaID + path.extname(req.file.path);
+            console.log(imageFileName)
+            console.log(req.file.path)
             fs.renameSync(req.file.path, imageFileName);
             data.postMediaFilePath = imageFileName;
             Post(data).save();

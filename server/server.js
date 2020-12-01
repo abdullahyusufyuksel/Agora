@@ -6,6 +6,18 @@ const morgan = require('morgan');
 const Router = require('./Router.js');
 const app = express();
 const cors = require('cors');
+// const webpack = require('webpack');
+// const configWebpack = require('./webpack.config.dev');
+
+// var compiler = webpack(configWebpack);
+
+// app.use(require('webpack-dev-middleware')(compiler, {
+//   noInfo: true,
+//   publicPath: config.output.publicPath
+// }));
+
+// app.use(require('webpack-hot-middleware')(compiler));
+
 // Logging
 app.use(morgan('dev'));
 
