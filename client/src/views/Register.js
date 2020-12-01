@@ -32,8 +32,8 @@ export default class Register extends React.Component{
         console.log(`Username: ${this.state.username}`);
         console.log(`Password: ${this.state.password}`);
         console.log(`First Name: ${this.state.firstName}`);
-        console.log(`First Name: ${this.state.lastName}`);
-        console.log(`First Name: ${this.state.email}`);
+        console.log(`Last Name: ${this.state.lastName}`);
+        console.log(`Email: ${this.state.email}`);
 
 
         var newUser = {
@@ -60,7 +60,7 @@ export default class Register extends React.Component{
             isAdmin: false
         })
 
-        //window.location = "/login";
+        window.location = "/login";
     }
     render(){
         return (
