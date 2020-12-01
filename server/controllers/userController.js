@@ -200,6 +200,15 @@ const updateBio = async function(req, res)
     res.status(200).send(data);
   });
 }
+const changePassword = async function(req, res)
+{
+  User.findOne(req.user.username).then(function(data)
+  {
+    data.password = req.password;
+    User(data).save();
+    res.status(200).send(data);
+  })
+}
 const changeProfilePic = async function(req, res)
 {
   User.findOne({username: req.user.username}).then(function(data)
@@ -208,10 +217,7 @@ const changeProfilePic = async function(req, res)
     {
       fs.unlinkSync(data.profilePicture);
     }
-    let mediaID = data._id;
-    const imageFileName = 'profilePics/' + mediaID + path.extname(req.file.path);
-    fs.renameSync(req.file.path, imageFileName);
-    data.profilePicture = imageFileName;
+    data.profilePicture = req.file.path;
     User(data).save();
     res.status(200).send(data);
   });
@@ -223,5 +229,6 @@ module.exports =
     getProfile,
     getUserByUsername,
     updateBio,
-    changeProfilePic
+    changeProfilePic,
+    changePassword
 };

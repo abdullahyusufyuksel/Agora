@@ -11,7 +11,7 @@ const Router = express.Router();
 const postStorage = multer.diskStorage(
     {
         destination: function(req, file, cb) {
-            cb(null, 'postMedia/');
+            cb(null, './postMedia/');
         }, 
         filename: function(req, file, cb) 
         {
@@ -34,7 +34,7 @@ const postUpload = multer(
 const userStorage = multer.diskStorage(
     {
         destination: function(req, file, cb) {
-            cb(null, 'profilePics/');
+            cb(null, './profilePics/');
         }, 
         filename: function(req, file, cb) 
         {
@@ -75,6 +75,8 @@ Router.post('/updateBio', passport.authenticate('jwt', {session: false}), userCo
 // Route for changing profile pic
 Router.post('/changeProfilePicture', passport.authenticate('jwt', {session: false}), userUpload.single('image'), userController.changeProfilePic)
 
+// Route for changing password
+Router.post('/changePassword', passport.authenticate('jwt', {session: false}), userController.changePassword);
 /*
     POST CONTROLLER ROUTES
 */

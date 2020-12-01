@@ -2,7 +2,7 @@ import { ListGroup, Navbar, NavDropdown, Nav, Container, Row, Col, Image, InputG
 import React, { Component } from "react";
 import "./Post.css"
 import axios from 'axios';
-// import MyImage from './../postMedia/profile.jpg'
+
 
 
 export class Post extends Component {
@@ -98,7 +98,9 @@ export class Post extends Component {
                         <Image className="profile-icon" src="https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg" roundedCircle />
                         {this.state.currentPost.author}
                     </div>
+
                     <img alt="post iamge"src={'http://localhost:5000/postMedia/profile.jpg'}/>
+
                     <Container className="details">
                         <Row>
                             <Col className = "sentence">
