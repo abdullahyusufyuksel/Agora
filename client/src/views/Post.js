@@ -156,7 +156,7 @@ export class Post extends Component {
                         {this.state.currentPost.author}
                     </div>
 
-                    <img alt="post iamge"src={'http://localhost:5000/postMedia/5fc6a4e50e1b691976d1d428.gif'}/>
+                    <img alt="post iamge"src={"http://localhost:5000/postMedia/5fc6a4e50e1b691976d1d428.gif"}/>
 
                     <Container className="details">
                         <Row>
