@@ -158,7 +158,8 @@ const removeUpvote = async function(req, res)
 }
 const getImage = async function(req, res)
 {
-  res.status(200).sendFile('./postMedia/' + req.params.fileName)
+  let filePath = await path.resolve('../server/postMedia/' + req.params.fileName);
+  res.status(200).sendFile(filePath)
 }
 module.exports =
 {
