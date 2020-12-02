@@ -25,7 +25,7 @@ export default class Login extends React.Component{
     
         //const { password, email } = this.state;
        
-        console.log(`Form submitted: `);
+        console.log("Form submitted: ");
         console.log(`Email: ${this.state.email}`);
         console.log(`Password: ${this.state.password}`);
 
@@ -35,16 +35,19 @@ export default class Login extends React.Component{
           };
 
         axios.post('http://localhost:5000/login', User)
-            .then(res => {
-                console.log(res.data)
-            })
-        
-        this.setState({
-            email: '',
-            password: ''
-        })
+        .then(res => {
+            this.props.setCurrentUser({token: res.token})
+            this.props.setCurrentUser({data: res.data})
 
-        window.location = "/";
+            this.setState({
+                email: '',
+                password: ''
+            })
+    
+            // window.location = "/";
+        });
+        
+        
     }
     render(){
         return (
