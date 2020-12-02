@@ -156,7 +156,10 @@ const removeUpvote = async function(req, res)
     User(data).save();
   });
 }
-
+const getImage = async function(req, res)
+{
+  res.status(200).sendFile('./postMedia/' + req.params.fileName)
+}
 module.exports =
 {
     createNewPost,
@@ -165,5 +168,6 @@ module.exports =
     searchTitles,
     upvotePost,
     removeUpvote,
-    getPostById
+    getPostById,
+    getImage
 };
