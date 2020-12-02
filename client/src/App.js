@@ -2,9 +2,16 @@ import { LinkContainer } from 'react-router-bootstrap';
 import Routes from './Routes.js';
 import { Nav, Navbar, NavItem, Image} from 'react-bootstrap';
 import './App.css';
-import AgoraIcon from "./Agora Logo.svg"
+import AgoraIcon from "./Agora Logo.svg";
+import { useState } from 'react';
 
 function App() {
+
+  const [currentUser, setCurrentUser] = useState({
+    token: null,
+    data: null
+  });
+
 
   return (
     <div className="App">
@@ -29,9 +36,12 @@ function App() {
         <LinkContainer to="/uploadview">
           <Nav.Link>Upload</Nav.Link>
         </LinkContainer>
+        <LinkContainer to="/post/5fc6aca323bf6e1e7ae8e4ca">
+          <Nav.Link>Ex</Nav.Link>
+        </LinkContainer>
       </Nav>
     </Navbar>
-    <Routes />
+    <Routes currentUser={currentUser} setCurrentUser={setCurrentUser}/>
     </div>
   );
 }

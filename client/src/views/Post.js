@@ -2,46 +2,103 @@ import { ListGroup, Navbar, NavDropdown, Nav, Container, Row, Col, Image, InputG
 import React, { Component } from "react";
 import "./Post.css"
 import axios from 'axios';
-// import MyImage from './../postMedia/profile.jpg'
+
 
 
 export class Post extends Component {
 
-    state = {
-        "currentPost" : "",
-        "comments" : [],
-        "sourceList" : "",
-        "forCommentList" : "",
-        "agaisntCommentList" : "",
-        "newComment" : {
-            "message" : "",
-            "for" : null
-        }
+    constructor(props) {
+        super(props);
 
-    }
+        this.state = {
+            "currentPost" : "",
+            "comments" : [],
+            "sourceList" : "",
+            "forCommentList" : [],
+            "agaisntCommentList" : [],
+            "newComment" : {
+                "message" : "",
+                "for" : null
+            }
+    
+        }
+      }
 
     onChange = (e) => this.setState( {newComment : { message: e.target.value }});
 
     submitFor = (e) => {
-        let postID = this.props.match.params.postID
+
+        const {currentUser, match: {params}} = this.props;
+        const {postID} = params;
+
         e.preventDefault();
-        this.setState({ newComment: {for: true}});
-        axios.post(`http://localhost:5000/commentOnPost/${postID}`, this.state.newComment)
+
+        let commentSend = {
+            message: this.state.newComment.message,
+            for : true
+        }
+
+        let config = {
+            headers : {
+                "Authorization": currentUser.data.token
+            }
+        }
+        axios.post(`http://localhost:5000/commentOnPost/${postID}`, commentSend, config)
+        .then( () => {
+            this.refreshComments()
+        });
         this.setState({newComment:{message: ""}})
       }
 
       submitAgaisnt = (e) => {
-        let postID = this.props.match.params.postID
+        const {currentUser, match: {params}} = this.props;
+        const {postID} = params;
         e.preventDefault();
+
+        let commentSend = {
+            message: this.state.newComment.message,
+            for : false
+        }
+
+        let config = {
+            headers : {
+                "Authorization": currentUser.data.token
+            }
+        }
+
         this.setState({ newComment: {for: false}});
-        axios.post(`http://localhost:5000/commentOnPost/${postID}`, this.state.newComment)
+        axios.post(`http://localhost:5000/commentOnPost/${postID}`, commentSend, config)
+        .then( () => {
+            this.refreshComments()
+        })
         this.setState({newComment:{message: ""}})
       }
+    
+      refreshComments(){
+        const {currentUser, match: {params}} = this.props;
+        const {postID} = params;
 
+        console.log(currentUser)
+        console.log(postID)
+
+        axios.get(`http://localhost:5000/post/${postID}`)
+        .then(res =>{
+            this.setState({currentPost : res.data})
+        });
+
+        axios.get(`http://localhost:5000/getComments/${postID}`)
+        .then(res =>{
+            this.setState({comments : res.data})
+        });
+
+      }
     componentDidMount() {
+       
 
-        let postID = this.props.match.params.postID
+        const {currentUser, match: {params}} = this.props;
+        const {postID} = params;
 
+        console.log(currentUser)
         console.log(postID)
 
         axios.get(`http://localhost:5000/post/${postID}`)
@@ -98,7 +155,9 @@ export class Post extends Component {
                         <Image className="profile-icon" src="https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg" roundedCircle />
                         {this.state.currentPost.author}
                     </div>
-                    <img alt="post iamge"src={'http://localhost:5000/postMedia/profile.jpg'}/>
+
+                    <img alt="post iamge"src={'http://localhost:5000/postMedia/5fc6a4e50e1b691976d1d428.gif'}/>
+
                     <Container className="details">
                         <Row>
                             <Col className = "sentence">
