@@ -77,6 +77,7 @@ Router.post('/changeProfilePicture', passport.authenticate('jwt', {session: fals
 
 // Route for changing password
 Router.post('/changePassword', passport.authenticate('jwt', {session: false}), userController.changePassword);
+
 /*
     POST CONTROLLER ROUTES
 */
@@ -105,6 +106,8 @@ Router.post('/upvotePost/:postID', passport.authenticate('jwt', {session: false}
 // Route for removing an upvote from a post
 Router.post('/removePostUpvote/:postID', passport.authenticate('jwt', {session: false}), postController.removeUpvote);
 
+// Route for getting image
+Router.get('/postMedia/:fileName', postController.getImage);
 /*
     COMMENT CONTROLLER ROUTES
 */
