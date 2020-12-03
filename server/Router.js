@@ -78,6 +78,8 @@ Router.post('/changeProfilePicture', passport.authenticate('jwt', {session: fals
 // Route for changing password
 Router.post('/changePassword', passport.authenticate('jwt', {session: false}), userController.changePassword);
 
+// Route for getting profile pic
+Router.get('/profilePics/:fileName', userController.getImage);
 /*
     POST CONTROLLER ROUTES
 */
@@ -108,6 +110,9 @@ Router.post('/removePostUpvote/:postID', passport.authenticate('jwt', {session: 
 
 // Route for getting image
 Router.get('/postMedia/:fileName', postController.getImage);
+
+// Route for getting post by username
+Router.get('/getPostByUser/:username', postController.getPostByUser);
 /*
     COMMENT CONTROLLER ROUTES
 */
