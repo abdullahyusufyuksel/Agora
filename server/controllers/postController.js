@@ -124,7 +124,7 @@ const upvotePost = async function(req, res)
 {
   User.findOne({username: req.user.username}).then(function(data)
   {
-      if(!data.postsUpvoted.contains(req.params.postID))
+      if(!data.postsUpvoted.includes(req.params.postID))
       {
         data.postsUpvoted.push(req.params.postID);
         User(data).save();

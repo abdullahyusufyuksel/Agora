@@ -38,9 +38,8 @@ const upvoteComment = async function(req, res)
 {
     User.findOne({username: req.user.username}).then(function(data)
     {   
-        if(!data.commentsUpvoted.contains(req.params.commentID))
+        if(!data.commentsUpvoted.includes(req.params.commentID))
         {
-            console.log(data);
             data.commentsUpvoted.push(req.params.commentID);
             Comment.findOne({_id: req.params.commentID}).then(function(data2)
             {
