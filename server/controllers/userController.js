@@ -222,7 +222,18 @@ const changeProfilePic = async function(req, res)
     res.status(200).send(data);
   });
 }
+const getImage = async function(req, res)
+{
+  if(req.params.fileName != '')
+  {
+    res.status(404).send(null);
+  } else
+  {
+    let filePath = await path.resolve('../server/profilePics/' + req.params.fileName);
+    res.status(200).sendFile(filePath)
+  }
 
+}
 module.exports = 
 {
     createNewUser,
@@ -231,5 +242,6 @@ module.exports =
     getUserByUsername,
     updateBio,
     changeProfilePic,
-    changePassword
+    changePassword,
+    getImage
 };
