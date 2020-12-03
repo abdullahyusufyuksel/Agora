@@ -9,14 +9,17 @@ import Post from "./views/Post";
 import Upload from "./views/Upload";
 import Profile from "./views/Profile"
 
-export default function Routes() {
+const Routes = (props) => {
+
+  let passedUser = props.currentUser
+  
   return (
     <Switch>
       <Route exact path="/">
-        <Home />
+        <Home currentUser={props.currentUser} />
       </Route>
       <Route exact path="/login">
-        <Login />
+        <Login currentUser={props.currentUser} setCurrentUser={props.setCurrentUser}/>
       </Route>
       <Route exact path="/profile">
         <Profile />
@@ -24,12 +27,12 @@ export default function Routes() {
       <Route exact path="/register">
         <Register />
       </Route>
-      <Route path="/post/:postID">
-        <Post postID={useParams()}/>
-      </Route>
+      <Route path="/post/:postID" render={ (props) => <Post currentUser={passedUser} {...props} />} />
       <Route exact path="/uploadview">
         <Upload/>
       </Route>
     </Switch>
   );
 }
+
+export default Routes;

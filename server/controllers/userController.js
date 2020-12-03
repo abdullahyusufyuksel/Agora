@@ -2,6 +2,8 @@ const isEmpty = require('is-empty');
 const bcrypt = require('bcrypt');
 const User = require("../models/userModel.js");
 const jwt = require('jsonwebtoken');
+const fs = require('fs');
+const path = require('path');
 const config = require('../../config/config.js');
 
 const validateInputReg = async function(newUser)
@@ -40,7 +42,6 @@ const validateInputReg = async function(newUser)
   return isValid;
 
 }
-
 const validateInputLogin = async function(user)
 {
   let isValid = true;
@@ -56,8 +57,7 @@ const validateInputLogin = async function(user)
   }
   return isValid;
 }
-
-const createNewUser = async function(req, res) 
+const createNewUser = async function(req, res)   
 {
     var newUser = req.body;
     console.log(newUser);
@@ -69,26 +69,24 @@ const createNewUser = async function(req, res)
         }
       );
     }
-    await User.findOne({email: newUser.email})
+    await User.findOne(
+      {
+        $or:[        
+          {username: newUser.username},
+          {email: newUser.email}
+        ]
+      }
+      
+      )
       .then(function(data)
       {
         if(data)
         {
-          return res.status(400).send(
-            {
-              error: "User already exists"
-            });
-        }
-      });
-    await User.findOne({ username: newUser.username })
-      .then(function(data)
-      {
-        if(data)
-        {
-          return res.status(400).send(
+          res.status(400).send(
           {
             error: "User already exists",
-          });          
+          });
+          return;     
         } else
         {
           bcrypt.genSalt(10, function(err, salt)
@@ -134,6 +132,7 @@ const login = async function(req, res)
           });
       } else
       {
+        console.log(data);
         bcrypt.compare(existingUser.password, data.password, function(err, result)
         {
           if(!result)
@@ -179,9 +178,58 @@ const getProfile = async function(req, res)
 {
   return res.status(200).send(req.user);
 }
+const getUserByUsername = async function(req, res)
+{
+  User.findOne({username: req.params.username}).then(function(data)
+  {
+    if(data)
+    {
+      res.status(200).send(data);
+    } else
+    {
+      res.status(404).send(false);
+    }
+  });
+}
+const updateBio = async function(req, res)
+{
+  User.findOne(req.user.username).then(function(data)
+  {
+    data.bio = req.bio;
+    User(data).save();
+    res.status(200).send(data);
+  });
+}
+const changePassword = async function(req, res)
+{
+  User.findOne(req.user.username).then(function(data)
+  {
+    data.password = req.password;
+    User(data).save();
+    res.status(200).send(data);
+  })
+}
+const changeProfilePic = async function(req, res)
+{
+  User.findOne({username: req.user.username}).then(function(data)
+  {
+    if(data.profilePicture)
+    {
+      fs.unlinkSync(data.profilePicture);
+    }
+    data.profilePicture = req.file.path;
+    User(data).save();
+    res.status(200).send(data);
+  });
+}
+
 module.exports = 
 {
     createNewUser,
     login,
-    getProfile
+    getProfile,
+    getUserByUsername,
+    updateBio,
+    changeProfilePic,
+    changePassword
 };

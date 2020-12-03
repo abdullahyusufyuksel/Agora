@@ -48,6 +48,8 @@ const createNewPost = async function(req, res)
         author: req.user.username,
         message: req.body.message,
         title: req.body.title,
+        sources: req.body.sources,
+        postMediaFilePath: req.file.path,
         date: Date.now(),
         upvotes: 0,
     }
@@ -56,8 +58,6 @@ const createNewPost = async function(req, res)
         .then(function(data)
         {
             let mediaID = data._id;
-            const imageFileName = 'postMedia/' + mediaID + path.extname(req.file.path);
-            fs.renameSync(req.file.path, imageFileName);
             User.findOne({username: req.user.username}).then(function(data)
             {
               data.posts.push(mediaID);
@@ -82,8 +82,9 @@ const getAllPosts = async function(req, res)
 }
 
 const getPostById = async function(req, res)
-{
-  Post.findById(req.params.id)
+{ 
+  let postID = req.params.postID
+  Post.findById(postID)
     .then(function(data)
     {
       res.status(200).send(data);
@@ -123,21 +124,43 @@ const upvotePost = async function(req, res)
 {
   Post.findOne({_id: req.params.postID}).then(function(data)
   {
-    console.log(data);
       data.upvotes++;
       Post(data).save();
   });
 
   User.findOne({username: req.user.username}).then(function(data)
   {
-    console.log(data)
       data.postsUpvoted.push(req.params.postID);
       User(data).save();
       res.status(200).send(data);
   });
-
 }
 
+const removeUpvote = async function(req, res)
+{
+  Post.findOne({_id: req.params.postID}).then(function(data)
+  {
+      data.upvotes--;
+      Post(data).save();
+  });
+
+  User.findOne({username: req.user.username}).then(function(data)
+  {
+    console.log(data.postsUpvoted);
+    data.postsUpvoted = data.postsUpvoted.filter(function(value, index, arr)
+    {
+        return value != req.params.postID;
+    });
+    console.log(data.postsUpvoted);
+
+    User(data).save();
+  });
+}
+const getImage = async function(req, res)
+{
+  let filePath = await path.resolve('../server/postMedia/' + req.params.fileName);
+  res.status(200).sendFile(filePath)
+}
 module.exports =
 {
     createNewPost,
@@ -145,5 +168,7 @@ module.exports =
     clearDatabase,
     searchTitles,
     upvotePost,
-    getPostById
+    removeUpvote,
+    getPostById,
+    getImage
 };

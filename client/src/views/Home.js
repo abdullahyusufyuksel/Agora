@@ -3,11 +3,22 @@ import { LinkContainer } from 'react-router-bootstrap';
 import React from "react";
 import "./Home.css"
 
-export default function Register() {
+const Home = (props) => {
+
+  const userData = props.currentUser.data
+  let userName;
+
+  if (userData === null) {
+    userName = "not loged in"
+  } else {
+    userName = userData.data.username
+  }
+
+
   return (
     <div className="Home">
       <Jumbotron>
-        <h1>Agora</h1>
+  <h1>Agora {userName}</h1>
         <p>
           Share and fact-check advertisements and posts related to concurrent social topics today!
         </p>
@@ -172,3 +183,4 @@ export default function Register() {
     </div>
   );
 }
+export default Home;

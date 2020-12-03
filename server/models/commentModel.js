@@ -6,6 +6,7 @@ const commentSchema = new mongoose.Schema(
     author: {type: String, required: true},
     message: {type: String, required: true},
     upvotes: {type: Number, required: true}, 
+    for: {type: Boolean, required: true},
     date: {type: Date, required:true}
 });
 
