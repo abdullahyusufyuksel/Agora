@@ -36,16 +36,18 @@ const createNewComment = async function(req, res)
 
 const upvoteComment = async function(req, res)
 {
-    Comment.findOne({_id: req.params.commentID}).then(function(data)
-    {
-        data.upvotes++;
-        Comment(data).save();
-    });
-
-
     User.findOne({username: req.user.username}).then(function(data)
-    {   console.log(data);
-        data.commentsUpvoted.push(req.params.commentID);
+    {   
+        if(!data.commentsUpvoted.contains(req.params.commentID))
+        {
+            console.log(data);
+            data.commentsUpvoted.push(req.params.commentID);
+            Comment.findOne({_id: req.params.commentID}).then(function(data2)
+            {
+                data2.upvotes++;
+                Comment(data2).save();
+            });        
+        }
         User(data).save();
     });
     

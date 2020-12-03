@@ -122,16 +122,18 @@ const searchTitles = async function(req, res)
 
 const upvotePost = async function(req, res)
 {
-  Post.findOne({_id: req.params.postID}).then(function(data)
-  {
-      data.upvotes++;
-      Post(data).save();
-  });
-
   User.findOne({username: req.user.username}).then(function(data)
   {
-      data.postsUpvoted.push(req.params.postID);
-      User(data).save();
+      if(!data.postsUpvoted.contains(req.params.postID))
+      {
+        data.postsUpvoted.push(req.params.postID);
+        User(data).save();
+        Post.findOne({_id: req.params.postID}).then(function(data2)
+        {
+            data2.upvotes++;
+            Post(data2).save();
+        });
+      } else
       res.status(200).send(data);
   });
 }
