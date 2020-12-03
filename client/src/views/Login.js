@@ -69,7 +69,6 @@ export default class Login extends React.Component{
                         </Form.Label>
                         <Form.Control name = "password" value={this.state.password} onChange={e => this.onChange(e)} type ="password" placeholder="Password" />
                     </Form.Group>
-                    <div class="button-right">
                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-group mr-2" role="group" aria-label="First group">
                             <Button onClick={this.onSubmit}>
@@ -81,7 +80,6 @@ export default class Login extends React.Component{
                                 Register
                             </Button>
                         </div>
-                    </div>
                     </div>
 
                 </Form>
