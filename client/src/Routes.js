@@ -1,6 +1,5 @@
 import React from "react";
-import { Route, Switch, useParams, useRouteMatch } from "react-router-dom";
-import {Image} from 'react-bootstrap';
+import { Route, Switch } from "react-router-dom";
 
 import Home from "./views/Home";
 import Login from "./views/Login";
@@ -22,7 +21,7 @@ const Routes = (props) => {
         <Login currentUser={props.currentUser} setCurrentUser={props.setCurrentUser}/>
       </Route>
       <Route exact path="/profile">
-        <Profile />
+        <Profile currentUser={props.currentUser}/>
       </Route>
       <Route exact path="/register">
         <Register />
