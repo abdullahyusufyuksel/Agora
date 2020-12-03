@@ -1,23 +1,27 @@
 import React from "react";
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, FormGroup } from 'react-bootstrap';
 import './Upload.css'
 
 
 export default class Login extends React.Component{
     constructor(props) {
         super(props);
+
+        this.state = {
+            file: null
+        }
+
+        this.handleChange = this.handleChange.bind(this)
+
     }
     click(){
         window.location = "/";
     }
-    showPreview(event){
-        if(event.target.files.length > 0){
-          var src = URL.createObjectURL(event.target.files[0]);
-          var preview = document.getElementById("file-ip-1-preview");
-          preview.src = src;
-          preview.style.display = "block";
-        }
-    }  
+    handleChange(event) {
+        this.setState({
+          file: URL.createObjectURL(event.target.files[0])
+        })
+    }
     
     render(){
         return (
@@ -29,15 +33,8 @@ export default class Login extends React.Component{
                         </span>
                     </h1>
                     <Form.Group>
-                    <div class="center">
-                        <div class="form-input">
-                            <label for="file-ip-1">Upload Image</label>
-                                <input type="file" id="file-ip-1" accept="image/*" onchange="showPreview(event)"/>
-                            <div class="preview">
-                                <img id="file-ip-1-preview" alt="Preview of upload."/>
-                            </div>
-                        </div>
-                    </div>
+                        <input type="file" onChange={this.handleChange}/>
+                        <img class = "image" src={this.state.file}/>
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>
@@ -50,20 +47,15 @@ export default class Login extends React.Component{
                             Sources
                         </Form.Label>
                         <Form.Control placeholder="Enter sources of support or information." />
+                        <Button onClick={this.click}>
+                                Add Source
+                        </Button>
                     </Form.Group>
+                    
                     <div class="button-right">
-                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                        <div class="btn-group mr-2 text-right" role="group" aria-label="First group">
-                            <Button onClick={this.click}>
-                                Add
-                            </Button>
-                        </div>
-                        <div class="btn-group mr-2 text-right" role="group" aria-label="Second group">
-                            <Button onClick={this.click}>
+                    <Button onClick={this.click}>
                                 Submit
-                            </Button>
-                        </div>
-                    </div>
+                    </Button>
                     </div>
                     
                 </Form>

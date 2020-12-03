@@ -44,10 +44,8 @@ export default class Login extends React.Component{
                 password: ''
             })
     
-            // window.location = "/";
+        //window.location = "/";    // Erases data for user in the home page for some reason. Need to fix.
         });
-        
-        
     }
     render(){
         return (

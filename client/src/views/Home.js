@@ -9,7 +9,7 @@ const Home = (props) => {
   let userName;
 
   if (userData === null) {
-    userName = "not loged in"
+    userName = "not logged in"
   } else {
     userName = userData.data.username
   }
