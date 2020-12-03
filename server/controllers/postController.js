@@ -161,6 +161,20 @@ const getImage = async function(req, res)
   let filePath = await path.resolve('../server/postMedia/' + req.params.fileName);
   res.status(200).sendFile(filePath)
 }
+const getPostByUser = async function(req, res)
+{
+  Post.find({author: req.params.username})
+    .then(function(data)
+    {
+      if(data)
+      {
+        res.status(200).send(data);
+      } else
+      {
+        res.status(404).send(false);
+      }
+    })
+}
 module.exports =
 {
     createNewPost,
@@ -170,5 +184,6 @@ module.exports =
     upvotePost,
     removeUpvote,
     getPostById,
-    getImage
+    getImage,
+    getPostByUser
 };
