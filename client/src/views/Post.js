@@ -4,7 +4,6 @@ import "./Post.css"
 import axios from 'axios';
 
 
-
 export class Post extends Component {
 
     constructor(props) {
@@ -12,6 +11,7 @@ export class Post extends Component {
 
         this.state = {
             "currentPost" : "",
+            "upvotes" : 0,
             "comments" : [],
             "sourceList" : "",
             "forCommentList" : [],
@@ -22,7 +22,7 @@ export class Post extends Component {
             }
     
         }
-      }
+    }
 
     onChange = (e) => this.setState( {newComment : { message: e.target.value }});
 
@@ -73,6 +73,41 @@ export class Post extends Component {
         })
         this.setState({newComment:{message: ""}})
       }
+
+      submitUpvote = (e) => {
+        const {currentUser, match: {params}} = this.props;
+        const {postID} = params;
+        e.preventDefault();
+
+        let config = {
+            headers : {
+                "Authorization": currentUser.data.token
+            }
+        }
+
+        axios.post(`http://localhost:5000/upvotePost/${postID}`, "" ,config)
+        .then( () => {
+            this.setState({upvotes: (this.state.upvotes + 1)})
+        })
+      }
+
+      upvoteComment = (commentID) => {
+        const {currentUser, match: {params}} = this.props;
+        const {postID} = params;
+    
+        console.log(commentID)
+
+        let config = {
+            headers : {
+                "Authorization": currentUser.data.token
+            }
+        }
+
+        axios.post(`http://localhost:5000/upvoteComment/${postID}/${commentID}`, currentUser.data ,config)
+        .then( () => {
+            
+        })
+      }
     
       refreshComments(){
         const {currentUser, match: {params}} = this.props;
@@ -83,7 +118,11 @@ export class Post extends Component {
 
         axios.get(`http://localhost:5000/post/${postID}`)
         .then(res =>{
-            this.setState({currentPost : res.data})
+            this.setState({
+                currentPost : res.data,
+                upvotes:  res.data.upvotes
+            })
+            
         });
 
         axios.get(`http://localhost:5000/getComments/${postID}`)
@@ -92,18 +131,20 @@ export class Post extends Component {
         });
 
       }
+
+      
     componentDidMount() {
        
-
         const {currentUser, match: {params}} = this.props;
         const {postID} = params;
 
-        console.log(currentUser)
-        console.log(postID)
 
         axios.get(`http://localhost:5000/post/${postID}`)
         .then(res =>{
-            this.setState({currentPost : res.data})
+            this.setState({
+                currentPost : res.data,
+                upvotes: res.data.upvotes
+            })
         });
 
         axios.get(`http://localhost:5000/getComments/${postID}`)
@@ -124,14 +165,12 @@ export class Post extends Component {
             )
         } else {
 
-            // var MyImage = './../postMedia/profile.jpg'
-
             const forCommentList = 
             this.state.comments.map((comment) => {
                 if (comment.for) {
                     return(
                             <ListGroup.Item> 
-                                ({comment.upvotes}) <i>{comment.author}</i> {comment.message}
+                              <Button onClick={ () => this.upvoteComment(comment._id)}> ^ </Button>  ({comment.upvotes}) <i>{comment.author}</i> {comment.message}
                             </ListGroup.Item>
                         )
                 }
@@ -184,6 +223,7 @@ export class Post extends Component {
                         </Row>
 
                         <Row>
+                            <Col>
                             <Navbar bg="light" expand="lg">
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />
                             <Navbar.Collapse id="basic-navbar-nav">
@@ -197,6 +237,11 @@ export class Post extends Component {
                 
                             </Navbar.Collapse>
                             </Navbar>
+                            </Col>
+
+                            <Col>
+                                ({this.state.upvotes}) <Button onClick={this.submitUpvote}>Upvote</Button>
+                            </Col>
                         </Row>
                     </Container>
 

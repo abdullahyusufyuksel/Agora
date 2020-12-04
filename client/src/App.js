@@ -1,6 +1,6 @@
 import { LinkContainer } from 'react-router-bootstrap';
 import Routes from './Routes.js';
-import { Nav, Navbar, NavItem, Image} from 'react-bootstrap';
+import { Nav, Navbar} from 'react-bootstrap';
 import './App.css';
 import AgoraIcon from "./Agora Logo.svg";
 import { useState } from 'react';
@@ -27,18 +27,34 @@ function App() {
       </div>
 
       <Nav class="navbar-nav ml-auto">
-        <LinkContainer to="/login">
-          <Nav.Link>Login</Nav.Link>
-        </LinkContainer>
-        <LinkContainer to="/profile">
-          <Nav.Link>Profile</Nav.Link>
-        </LinkContainer>
-        <LinkContainer to="/uploadview">
-          <Nav.Link>Upload</Nav.Link>
-        </LinkContainer>
-        <LinkContainer to="/post/5fc6aca323bf6e1e7ae8e4ca">
-          <Nav.Link>Ex</Nav.Link>
-        </LinkContainer>
+      { ( () => {
+              if (currentUser.token === null) {
+                return (
+                  <Nav class="navbar-nav ml-auto">
+                    <LinkContainer to="/login">
+                    <Nav.Link>Login</Nav.Link>
+                    </LinkContainer>
+                    </Nav>
+                ) 
+                
+              } else {
+                
+                return(
+                  <Nav class="navbar-nav ml-auto">
+                      <LinkContainer to="/profile">
+                      <Nav.Link>Profile</Nav.Link>
+                    </LinkContainer>
+                    <LinkContainer to="/uploadview">
+                      <Nav.Link>Upload</Nav.Link>
+                    </LinkContainer>
+                    <LinkContainer to="/post/5fc6aca323bf6e1e7ae8e4ca">
+                      <Nav.Link>Ex</Nav.Link>
+                    </LinkContainer>
+                  </Nav>
+                )
+              } 
+          }) () 
+        }
       </Nav>
     </Navbar>
     <Routes currentUser={currentUser} setCurrentUser={setCurrentUser}/>
