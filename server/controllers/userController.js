@@ -104,7 +104,7 @@ const createNewUser = async function(req, res)
                   res.status(400).send(err);
                 });
             })
-          })
+          });
         }
       });
 };
@@ -202,11 +202,25 @@ const updateBio = async function(req, res)
 }
 const changePassword = async function(req, res)
 {
-  User.findOne(req.user.username).then(function(data)
+  User.findOne({username: req.user.username}).then(function(existingUser)
   {
-    data.password = req.password;
-    User(data).save();
-    res.status(200).send(data);
+    bcrypt.genSalt(10, function(err, salt)
+    {
+      bcrypt.hash(req.body.password, salt, function(err, hash)
+      {
+        console.log(req.body.password);
+        existingUser.password = hash;
+        User(existingUser).save()
+          .then(function(data)
+          {
+            res.status(200).send(data);
+          })
+          .catch(function(err)
+          {
+            res.status(400).send(err);
+          });
+      })
+    });
   })
 }
 const changeProfilePic = async function(req, res)
