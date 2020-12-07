@@ -227,7 +227,7 @@ const changeProfilePic = async function(req, res)
 {
   User.findOne({username: req.user.username}).then(function(data)
   {
-    if(data.profilePicture)
+    if(data.profilePicture != "NULL")
     {
       fs.unlinkSync(data.profilePicture);
     }

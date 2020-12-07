@@ -1,0 +1,1 @@
+# This dir is for storing the profile pictures of the users.
