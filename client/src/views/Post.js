@@ -232,7 +232,9 @@ export class Post extends Component {
                         {this.state.currentPost.author}
                     </div>
 
+
                     <img alt="post iamge"src={`http://localhost:5000/${this.state.currentPost.postMediaFilePath}`}/>                    
+
 
                     <Container className="details">
                         <Row>
@@ -245,7 +247,7 @@ export class Post extends Component {
 
                         <Row>
                             <Col className="source">
-                                <i>Souces:</i>
+                                <i>Sources:</i>
                                 { 
                                     this.state.currentPost.sources.map( (source) => 
                                         (
