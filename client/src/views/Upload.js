@@ -1,5 +1,7 @@
 import React from "react";
+import FormData from 'form-data';
 import { Button, Form, FormGroup } from 'react-bootstrap';
+import axios from 'axios';
 import './Upload.css'
 
 
@@ -8,11 +10,19 @@ export default class Login extends React.Component{
         super(props);
 
         this.state = {
+            title: '',
             file: null,
+            filePath: null,
+            description: '',
             rows: []
         }
 
         this.handleImage = this.handleImage.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleAddRow = this.handleAddRow.bind(this);
+        this.handleRemoveSpecificRow = this.handleRemoveSpecificRow.bind(this);
+        this.onChange = this.onChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
 
     }
     click(){
@@ -21,7 +31,8 @@ export default class Login extends React.Component{
     handleImage(event) {
         if (event.target.files[0] != null) {
             this.setState({
-                file: URL.createObjectURL(event.target.files[0])
+                file: URL.createObjectURL(event.target.files[0]),
+                filePath: event.target.files[0]
             })
         }
         else{
@@ -39,7 +50,7 @@ export default class Login extends React.Component{
         this.setState({
           rows
         });
-      };
+    };
       handleAddRow = () => {
         const item = {
           name: "",
@@ -47,17 +58,61 @@ export default class Login extends React.Component{
         this.setState({
           rows: [...this.state.rows, item]
         });
-      };
-      handleRemoveRow = () => {
-        this.setState({
-          rows: this.state.rows.slice(0, -1)
-        });
-      };
+    };
       handleRemoveSpecificRow = (idx) => () => {
         const rows = [...this.state.rows]
         rows.splice(idx, 1)
         this.setState({ rows })
       }
+
+      onChange = (e) => this.setState({ [e.target.name]: e.target.value });
+
+      onSubmit(e){
+        e.preventDefault();
+           
+        console.log(`Upload: `);
+        console.log(`Title: ${this.state.title}`);
+        console.log(`file: ${this.state.filePath}`);
+        console.log(`description: ${this.state.description}`);
+        console.log(`rows: ${this.state.rows}`);
+
+        let temp = new FormData();
+        temp.append('title', this.state.title);
+        temp.append('image', this.state.filePath, this.state.filePath.fileName);
+        temp.append('message', this.state.description);
+        temp.append('sources', this.state.rows);
+
+        let config = {
+            headers : {
+                'accept': 'application/json',
+                'Accept-Language': 'en-US,en;q=0.8',
+                'Content-Type': `multipart/form-data; boundary=${temp._boundary}`,
+                "Authorization": this.props.currentUser.data.token
+            }
+        }
+        
+        var data = {
+            title: this.state.title,
+            image: this.state.filePath,
+            message: this.state.description,
+            sources: this.state.rows
+          };
+
+        axios.post('http://localhost:5000/upload', temp, config)
+            .then(res => {
+                console.log(res.data)
+            })
+
+        this.setState({
+            title: '',
+            file: null,
+            filePath: null, 
+            description: '',
+            rows: []
+        })
+
+        // window.location = "/login";
+    }
 
     render(){
         return (
@@ -72,7 +127,7 @@ export default class Login extends React.Component{
                         <Form.Label>
                             Title
                         </Form.Label>
-                        <Form.Control placeholder="Enter a title for the post." />
+                        <Form.Control name = "title" value={this.state.title} onChange={e => this.onChange(e)} placeholder="Enter a title for the post." />
                     </Form.Group>
                     <Form.Group>
                         <input type="file" onChange={this.handleImage}/>
@@ -82,7 +137,7 @@ export default class Login extends React.Component{
                         <Form.Label>
                             Description
                         </Form.Label>
-                        <Form.Control as="textarea" rows={3} placeholder="Enter a statement about the image." />
+                        <Form.Control name = "description" value={this.state.description} as="textarea" rows={3} onChange={e => this.onChange(e)} placeholder="Enter a statement about the image." />
                     </Form.Group>
                     
                 </Form>
@@ -102,8 +157,8 @@ export default class Login extends React.Component{
                             <td>
                                 <input
                                 type="text"
-                                name="source"
-                                value={this.state.rows[idx].source}
+                                name="rows"
+                                value={this.state.rows[idx].rows}
                                 onChange={this.handleChange(idx)}
                                 className="form-control"
                                 />
@@ -134,4 +189,3 @@ export default class Login extends React.Component{
         );
     }
 }
-
