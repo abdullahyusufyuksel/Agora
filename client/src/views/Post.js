@@ -3,6 +3,10 @@ import React, { Component } from "react";
 import "./Post.css"
 import axios from 'axios';
 
+import upvoteArrow from "./../upvote_arrow.svg";
+import heart from "./../heart.svg";
+
+
 
 export class Post extends Component {
 
@@ -14,12 +18,11 @@ export class Post extends Component {
             "upvotes" : 0,
             "comments" : [],
             "sourceList" : "",
-            "forCommentList" : [],
-            "agaisntCommentList" : [],
             "newComment" : {
                 "message" : "",
                 "for" : null
-            }
+            },
+            "sortBy" : ""
     
         }
     }
@@ -50,7 +53,7 @@ export class Post extends Component {
         this.setState({newComment:{message: ""}})
       }
 
-      submitAgaisnt = (e) => {
+    submitAgaisnt = (e) => {
         const {currentUser, match: {params}} = this.props;
         const {postID} = params;
         e.preventDefault();
@@ -70,51 +73,85 @@ export class Post extends Component {
         axios.post(`http://localhost:5000/commentOnPost/${postID}`, commentSend, config)
         .then( () => {
             this.refreshComments()
+           
         })
         this.setState({newComment:{message: ""}})
-      }
+    }
 
-      submitUpvote = (e) => {
+    submitUpvote = (e) => {
+
         const {currentUser, match: {params}} = this.props;
         const {postID} = params;
         e.preventDefault();
 
-        let config = {
-            headers : {
-                "Authorization": currentUser.data.token
+
+        if (currentUser.data !== null) {
+
+            let config = {
+                headers : {
+                    "Authorization": currentUser.data.token
+                }
             }
-        }
 
-        axios.post(`http://localhost:5000/upvotePost/${postID}`, "" ,config)
-        .then( () => {
-            this.setState({upvotes: (this.state.upvotes + 1)})
-        })
-      }
-
-      upvoteComment = (commentID) => {
-        const {currentUser, match: {params}} = this.props;
-        const {postID} = params;
-    
-        console.log(commentID)
-
-        let config = {
-            headers : {
-                "Authorization": currentUser.data.token
-            }
-        }
-
-        axios.post(`http://localhost:5000/upvoteComment/${postID}/${commentID}`, currentUser.data ,config)
-        .then( () => {
+            axios.post(`http://localhost:5000/upvotePost/${postID}`, "" ,config)
+            .then( () => {
+                this.setState({upvotes: (this.state.upvotes + 1)})
             
-        })
-      }
-    
-      refreshComments(){
+            })
+        }
+    }
+
+    onSelect = (e) => {
+       switch(parseInt(e)) {
+        case 1 : {
+            this.setState({sortBy: "Newest"})
+            this.state.comments.sort((a, b) => {
+                return new Date(b.date) - new Date(a.date)
+            });
+            break;
+        }
+        case 2 : {
+            this.setState({sortBy: "Oldest"})
+            this.state.comments.sort((a, b) => {
+                return new Date(a.date) - new Date(b.date)
+            });
+            break;
+        }
+        case 3 : {
+            this.setState({sortBy: "Most Upvoted"})
+            this.state.comments.sort((a, b) => b.upvotes - a.upvotes);
+            break;
+        }
+        default : {
+            this.setState({sortBy: "Most Upvoted"})
+        }
+       }
+    }
+
+    upvoteComment = (comment) => {
         const {currentUser, match: {params}} = this.props;
         const {postID} = params;
 
-        console.log(currentUser)
-        console.log(postID)
+        const index = this.state.comments.indexOf(comment)
+        let tempComments = this.state.comments
+        tempComments[index].upvotes = tempComments[index].upvotes + 1
+        this.setState({commets: tempComments})
+
+        let config = {
+            headers : {
+                "Authorization": currentUser.data.token
+            }
+        }
+
+        axios.post(`http://localhost:5000/upvoteComment/${postID}/${comment._id}`, currentUser.data ,config)
+    }
+    
+    refreshComments(){
+        const {match: {params}} = this.props;
+        const {postID} = params;
+
+        // console.log(currentUser)
+        console.log(this.state)
 
         axios.get(`http://localhost:5000/post/${postID}`)
         .then(res =>{
@@ -127,16 +164,33 @@ export class Post extends Component {
 
         axios.get(`http://localhost:5000/getComments/${postID}`)
         .then(res =>{
-            this.setState({comments : res.data})
+            let commentsTemp = res.data
+            console.log(this.state.sortBy)
+            if (this.state.sortBy === "Most Upvoted"){
+                commentsTemp.sort((a, b) => b.upvotes - a.upvotes);
+            } else if (this.state.sortBy === "Newest"){
+                console.log("brrr")
+                commentsTemp.sort((a, b) => {
+                    return new Date(b.date) - new Date(a.date)
+                });
+            } else if (this.state.sortBy === "Oldest"){
+                commentsTemp.sort((a, b) => {
+                    return new Date(a.date) - new Date(b.date)
+                });
+            }
+            this.setState({comments : commentsTemp})
         });
 
-      }
+        
+    }
 
       
     componentDidMount() {
        
-        const {currentUser, match: {params}} = this.props;
+        const {match: {params}} = this.props;
         const {postID} = params;
+
+        // console.log("mount")
 
 
         axios.get(`http://localhost:5000/post/${postID}`)
@@ -151,9 +205,13 @@ export class Post extends Component {
         .then(res =>{
             this.setState({comments : res.data})
         });
+
+        this.state.comments.sort((a, b) => b.upvotes - a.upvotes);
     }
 
     render() {
+
+        const {currentUser} = this.props;
         
         if (this.state.currentPost === ""){
             return (
@@ -165,28 +223,7 @@ export class Post extends Component {
             )
         } else {
 
-            const forCommentList = 
-            this.state.comments.map((comment) => {
-                if (comment.for) {
-                    return(
-                            <ListGroup.Item> 
-                              <Button onClick={ () => this.upvoteComment(comment._id)}> ^ </Button>  ({comment.upvotes}) <i>{comment.author}</i> {comment.message}
-                            </ListGroup.Item>
-                        )
-                }
-            });
-            
-            const againstCommentList = 
-            this.state.comments.map((comment) => {
-                if (!comment.for) {
-                    return(
-                            <ListGroup.Item> 
-                                ({comment.upvotes}) <i>{comment.author}</i> {comment.message}
-                            </ListGroup.Item>
-                        )
-                }
-            });
-
+           
 
             return (
                 <div className="Post" >
@@ -195,7 +232,7 @@ export class Post extends Component {
                         {this.state.currentPost.author}
                     </div>
 
-                    <img alt="post iamge"src={"http://localhost:5000/postMedia/5fc6a4e50e1b691976d1d428.gif"}/>
+                    <img alt="post iamge"src={`http://localhost:5000/${this.state.currentPost.postMediaFilePath}`}/>                    
 
                     <Container className="details">
                         <Row>
@@ -224,14 +261,14 @@ export class Post extends Component {
 
                         <Row>
                             <Col>
-                            <Navbar bg="light" expand="lg">
+                            <Navbar bg="light">
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />
                             <Navbar.Collapse id="basic-navbar-nav">
-                                <Nav pullRight>
-                                <NavDropdown title="Sort By" id="basic-nav-dropdown">
-                                    <NavDropdown.Item href="#action/3.1">Newest</NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.2">Oldest</NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.3">Most Upvoted</NavDropdown.Item>
+                                <Nav>
+                                <NavDropdown title={`Sort By: ${this.state.sortBy}`} onSelect={ (e)=> this.onSelect(e)} id="basic-nav-dropdown">
+                                    <NavDropdown.Item eventKey={1}>Newest</NavDropdown.Item>
+                                    <NavDropdown.Item eventKey={2}>Oldest</NavDropdown.Item>
+                                    <NavDropdown.Item eventKey={3}> Most Upvoted</NavDropdown.Item>
                                 </NavDropdown>
                                 </Nav>
                 
@@ -240,7 +277,7 @@ export class Post extends Component {
                             </Col>
 
                             <Col>
-                                ({this.state.upvotes}) <Button onClick={this.submitUpvote}>Upvote</Button>
+                                ({this.state.upvotes}) <Image className="unselectable"  height="25px" width="25px"   src={heart} onClick={this.submitUpvote}/>
                             </Col>
                         </Row>
                     </Container>
@@ -253,7 +290,24 @@ export class Post extends Component {
                                         For
                                     </ListGroup.Item>
 
-                                    {forCommentList}
+                                    { 
+                                        this.state.comments.map((comment) => {
+                                                if (comment.for && currentUser.data !== null) {
+                                                    return(
+                                                            <ListGroup.Item> 
+                                                                 <Image className="unselectable" height="25px" width="25px" src={upvoteArrow} onClick={ () => this.upvoteComment(comment)}/>({comment.upvotes}) <i>{comment.author}</i> {comment.message}
+                                                            </ListGroup.Item>
+                                                        )
+                                                } else if (comment.for) {
+                                                    return(
+                                                        <ListGroup.Item> 
+                                                        ({comment.upvotes})<i>{comment.author}</i> {comment.message}
+                                                   </ListGroup.Item>
+                                                    )
+                                                }
+                                        })
+                                       
+                                    }
                                     
                                 </ListGroup>
 
@@ -265,30 +319,54 @@ export class Post extends Component {
                                         Against
                                     </ListGroup.Item>
 
-                                    {againstCommentList}
+                                    { 
+                                        this.state.comments.map((comment) => {
+                                                if (!comment.for && currentUser.data !== null) {
+                                                    return(
+                                                            <ListGroup.Item> 
+                                                                 <Image className="unselectable" height="25px" width="25px" src={upvoteArrow} onClick={ () => this.upvoteComment(comment)}/>({comment.upvotes}) <i>{comment.author}</i> {comment.message}
+                                                            </ListGroup.Item>
+                                                        )
+                                                } else if (!comment.for) {
+                                                    return(
+                                                        <ListGroup.Item> 
+                                                        ({comment.upvotes})<i>{comment.author}</i> {comment.message}
+                                                   </ListGroup.Item>
+                                                    )
+                                                }
+                                        })
+                                       
+                                    }
 
                                 </ListGroup>
 
                             </Col>
                         </Row>
-                        <Row>
-                            <InputGroup className="comment-bar"> 
-                                <FormControl
-                                name="commentField"
-                                placeholder="Comment..."
-                                aria-label="comment"
-                                aria-describedby="basic-addon2"
-                                onChange={this.onChange}
-                                value={this.state.newComment.message}
-                                />
-                                <InputGroup.Append>
-                                    <Button variant="success" onClick={this.submitFor}>For</Button>
-                                    <Button variant="danger" onClick={this.submitAgaisnt}>Against</Button>
-                                </InputGroup.Append>
 
-                            </InputGroup>
+                        {
+                            currentUser.data !== null
+                            ? (
+                                <Row>
+                                    <InputGroup className="comment-bar"> 
+                                        <FormControl
+                                        name="commentField"
+                                        placeholder="Comment..."
+                                        aria-label="comment"
+                                        aria-describedby="basic-addon2"
+                                        onChange={this.onChange}
+                                        value={this.state.newComment.message}
+                                        />
+                                        <InputGroup.Append>
+                                            <Button variant="success" onClick={this.submitFor}>For</Button>
+                                            <Button variant="danger" onClick={this.submitAgaisnt}>Against</Button>
+                                        </InputGroup.Append>
 
-                        </Row>
+                                    </InputGroup>
+                                </Row>
+                                )
+                            : "Login to disscus on this post!"
+                        }
+                        
                     </Container>
                 
                 </div>

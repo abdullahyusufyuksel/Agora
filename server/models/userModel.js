@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema(
     email: {type:String, required:true},
     bio: {type:String, required: true},
     isAdmin: {type:Boolean, required:true},
-    profilePicture: {type: String},
+    profilePicture: {type: String, required: true},
     posts: [{type: String, required: true}],
     comments: [{type: String, required: true}],
     postsUpvoted: [{type: String, required: true}],

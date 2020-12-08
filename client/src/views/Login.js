@@ -1,9 +1,10 @@
 import React from "react";
 import { Button, Form } from 'react-bootstrap';
+import {withRouter} from 'react-router-dom';
 import './Login.css'
 import axios from 'axios';
 
-export default class Login extends React.Component{
+export class Login extends React.Component{
     constructor(props) {
         super(props);
 
@@ -14,7 +15,12 @@ export default class Login extends React.Component{
             email: '',
             password: ''
         };
-    }
+    } 
+
+    nextPath(path) {
+        this.props.history.push(path);
+      }
+
     onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
     clickRegister(){
@@ -25,9 +31,9 @@ export default class Login extends React.Component{
     
         //const { password, email } = this.state;
        
-        console.log("Form submitted: ");
-        console.log(`Email: ${this.state.email}`);
-        console.log(`Password: ${this.state.password}`);
+        // console.log("Form submitted: ");
+        // console.log(`Email: ${this.state.email}`);
+        // console.log(`Password: ${this.state.password}`);
 
         var User = {
             email: this.state.email,
@@ -36,18 +42,26 @@ export default class Login extends React.Component{
 
         axios.post('http://localhost:5000/login', User)
         .then(res => {
-            this.props.setCurrentUser({token: res.token})
-            this.props.setCurrentUser({data: res.data})
 
-            this.setState({
-                email: '',
-                password: ''
-            })
-    
-            // window.location = "/";
+            if (res.status === 200){
+                this.props.setCurrentUser("token", res.data.token);
+                this.props.setCurrentUser("data", res.data);
+
+                this.setState({
+                    email: '',
+                    password: ''
+                })
+
+                this.nextPath('/')
+            } else  {
+                
+                this.setState({
+                    email: '',
+                    password: ''
+                })
+            }
+            
         });
-        
-        
     }
     render(){
         return (
@@ -71,7 +85,6 @@ export default class Login extends React.Component{
                         </Form.Label>
                         <Form.Control name = "password" value={this.state.password} onChange={e => this.onChange(e)} type ="password" placeholder="Password" />
                     </Form.Group>
-                    <div class="button-right">
                     <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-group mr-2" role="group" aria-label="First group">
                             <Button onClick={this.onSubmit}>
@@ -84,10 +97,10 @@ export default class Login extends React.Component{
                             </Button>
                         </div>
                     </div>
-                    </div>
 
                 </Form>
             </div>
         );
     }
 }
+export default withRouter(Login);

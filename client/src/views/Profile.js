@@ -1,4 +1,4 @@
-import { ListGroup, Container, Row, Col, Image, Card, CardDeck, Button } from 'react-bootstrap';
+import { ListGroup, Container, Row, Col, Image, Card, CardColumns, Button } from 'react-bootstrap';
 import { Component } from 'react';
 import {withRouter} from 'react-router-dom';
 import React from "react";
@@ -22,24 +22,29 @@ export class Profile extends Component {
   }
 
 
-  componentDidMount(){
+  componentDidMount() {
+
     this.setState({currentUser : this.props.currentUser.data})
 
-    Axios.get(`http://localhost:5000/`)
-    .then(res => {
+    try {
+      Axios.get(`http://localhost:5000/getPostByUser/${this.props.currentUser.data.data.username}`)
+      .then(res => {
       this.setState({userPost : res.data})
-    })
-  }
+      })
+    } catch (err) {
+      console.log(err)
+    }
+    
+}
 
   render() {
    
     if (this.state.currentUser !== null) {
 
-      console.log(this.state.currentUser)
       return (
         <div className="Profile" >
         <div className = "Profile-header">
-            <Image className="Profile-icon" src="https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg" roundedCircle />
+            <Image className="Profile-icon" src={`http://localhost:5000/profilePics/${this.props.currentUser.data.data.profilePicture}`} roundedCircle />
         </div>
     <Container className="Profile-details">
         <Row>
@@ -64,7 +69,7 @@ export class Profile extends Component {
                     <h5>Posts:</h5>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                    <h5>{this.state.currentUser.data.posts.length}</h5>
+                    <h5>{this.state.userPost.length}</h5>
                     </ListGroup.Item>
                 </ListGroup>
 
@@ -96,11 +101,13 @@ export class Profile extends Component {
         </Row>
     </Container>
 
-    <CardDeck className="Profile-Posts">
+
+
+    <CardColumns className="Profile-Posts">
         {
           this.state.userPost.map( (post) => {
               return(
-                <Card style={{ width: '22rem' }}>
+                <Card style={{flex: 0}}>
                   <Card.Img variant="top" src="https://media.9news.com/assets/CCT/images/f91f601a-aa7e-485d-83a0-34ef17bdd6ef/f91f601a-aa7e-485d-83a0-34ef17bdd6ef_1920x1080.jpg" />
                   <Card.Body>
                     <Card.Title>{post.title}</Card.Title>
@@ -113,7 +120,7 @@ export class Profile extends Component {
                 )
           })
         }
-    </CardDeck>
+    </CardColumns>
     </div>  
       );
     } else {
