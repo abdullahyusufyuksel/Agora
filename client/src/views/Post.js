@@ -133,9 +133,22 @@ export class Post extends Component {
         const {postID} = params;
 
         const index = this.state.comments.indexOf(comment)
-        let tempComments = this.state.comments
-        tempComments[index].upvotes = tempComments[index].upvotes + 1
-        this.setState({commets: tempComments})
+        let commentsTemp = this.state.comments
+        commentsTemp[index].upvotes = commentsTemp[index].upvotes + 1
+
+            if (this.state.sortBy === "Most Upvoted"){
+                commentsTemp.sort((a, b) => b.upvotes - a.upvotes);
+            } else if (this.state.sortBy === "Newest"){
+                commentsTemp.sort((a, b) => {
+                    return new Date(b.date) - new Date(a.date)
+                });
+            } else if (this.state.sortBy === "Oldest"){
+                commentsTemp.sort((a, b) => {
+                    return new Date(a.date) - new Date(b.date)
+                });
+            }
+            this.setState({comments : commentsTemp})
+        this.setState({commets: commentsTemp})
 
         let config = {
             headers : {
@@ -150,7 +163,6 @@ export class Post extends Component {
         const {match: {params}} = this.props;
         const {postID} = params;
 
-        // console.log(currentUser)
         console.log(this.state)
 
         axios.get(`http://localhost:5000/post/${postID}`)
@@ -165,11 +177,9 @@ export class Post extends Component {
         axios.get(`http://localhost:5000/getComments/${postID}`)
         .then(res =>{
             let commentsTemp = res.data
-            console.log(this.state.sortBy)
             if (this.state.sortBy === "Most Upvoted"){
                 commentsTemp.sort((a, b) => b.upvotes - a.upvotes);
             } else if (this.state.sortBy === "Newest"){
-                console.log("brrr")
                 commentsTemp.sort((a, b) => {
                     return new Date(b.date) - new Date(a.date)
                 });
@@ -189,9 +199,6 @@ export class Post extends Component {
        
         const {match: {params}} = this.props;
         const {postID} = params;
-
-        // console.log("mount")
-
 
         axios.get(`http://localhost:5000/post/${postID}`)
         .then(res =>{
@@ -232,9 +239,7 @@ export class Post extends Component {
                         {this.state.currentPost.author}
                     </div>
 
-
                     <img alt="post iamge"src={`http://localhost:5000/${this.state.currentPost.postMediaFilePath}`}/>                    
-
 
                     <Container className="details">
                         <Row>
@@ -247,7 +252,7 @@ export class Post extends Component {
 
                         <Row>
                             <Col className="source">
-                                <i>Sources:</i>
+                                <i>Souces:</i>
                                 { 
                                     this.state.currentPost.sources.map( (source) => 
                                         (

@@ -24,7 +24,7 @@ export class Login extends React.Component{
     onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
     clickRegister(){
-        window.location = "/register";
+        this.nextPath("/register")
     }
     onSubmit(e){
         e.preventDefault();
