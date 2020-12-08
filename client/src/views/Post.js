@@ -317,7 +317,7 @@ export class Post extends Component {
                                                 if (comment.for && currentUser.data !== null) {
                                                     return(
                                                             <ListGroup.Item> 
-                                                                 <Image className="unselectable" height="25px" width="25px" src={upvoteArrow} onClick={ () => this.upvoteComment(comment)}/>({comment.upvotes}) <i>{comment.author}</i> {comment.message}
+                                                                 <Image className="unselectable" height="25px" width="25px" src={upvoteArrow} onClick={ () => this.upvoteComment(comment)}/>({comment.upvotes})<Button className="link" onClick={() => this.goToUser(comment.author)}>{comment.author}</Button>{comment.message}
                                                             </ListGroup.Item>
                                                         )
                                                 } else if (comment.for) {
@@ -346,7 +346,7 @@ export class Post extends Component {
                                                 if (!comment.for && currentUser.data !== null) {
                                                     return(
                                                             <ListGroup.Item> 
-                                                                 <Image className="unselectable" height="25px" width="25px" src={upvoteArrow} onClick={ () => this.upvoteComment(comment)}/>({comment.upvotes}) <i>{comment.author}</i> {comment.message}
+                                                                 <Image className="unselectable" height="25px" width="25px" src={upvoteArrow} onClick={ () => this.upvoteComment(comment)}/>({comment.upvotes})<Button className="link" onClick={() => this.goToUser(comment.author)}>{comment.author}</Button>{comment.message}
                                                             </ListGroup.Item>
                                                         )
                                                 } else if (!comment.for) {
