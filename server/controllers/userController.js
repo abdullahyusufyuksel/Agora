@@ -60,7 +60,7 @@ const validateInputLogin = async function(user)
 const createNewUser = async function(req, res)   
 {
     var newUser = req.body;
-    console.log(newUser);
+    // console.log(newUser);
     let isValid = await validateInputReg(newUser);
     if (!isValid) {
       return res.status(400).send(
@@ -84,11 +84,12 @@ const createNewUser = async function(req, res)
         {
           res.status(400).send(
           {
-            error: "User already exists",
+            error: "User already exists"
+            
           });
           return;     
         } else
-        {
+        { 
           bcrypt.genSalt(10, function(err, salt)
           {
             bcrypt.hash(newUser.password, salt, function(err, hash)
@@ -98,6 +99,7 @@ const createNewUser = async function(req, res)
                 .then(function(data)
                 {
                   res.json(data);
+                  
                 })
                 .catch(function(err)
                 {
@@ -227,7 +229,7 @@ const changeProfilePic = async function(req, res)
 {
   User.findOne({username: req.user.username}).then(function(data)
   {
-    if(data.profilePicture != "NULL")
+    if(data.profilePicture != "NULL" && data.profilePicture != "profilePics/default.png")
     {
       fs.unlinkSync(data.profilePicture);
     }

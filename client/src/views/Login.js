@@ -23,7 +23,7 @@ export class Login extends React.Component{
 
     onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
-    clickRegister(){
+    clickRegister = () => {
         this.nextPath("/register")
     }
     onSubmit(e){
