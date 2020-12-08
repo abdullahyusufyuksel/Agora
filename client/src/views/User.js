@@ -47,12 +47,12 @@ export class User extends Component {
    
     if (this.state.currentUser !== null) {
 
-        // console.log(this.state)
+        console.log(this.state)
 
       return (
         <div className="Profile" >
         <div className = "Profile-header">
-            <Image className="Profile-icon" src={`http://localhost:5000/${this.props.currentUser.profilePicture}`} roundedCircle />
+            <Image className="Profile-icon" src={`http://localhost:5000/${this.state.currentUser.profilePicture}`} roundedCircle />
         </div>
     <Container className="Profile-details">
         <Row>
