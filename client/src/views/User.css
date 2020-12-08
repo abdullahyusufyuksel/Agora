@@ -1,0 +1,46 @@
+
+.Profile {
+    width: 100%;
+    max-width: 1000px;
+    padding: 20px;
+    margin: auto;
+    justify-content: center;
+}
+
+.Profile-header {
+    text-align: center;
+}
+
+.Profile-icon {
+    height:200px;
+    width:200px;
+}
+
+.Profile-details{
+    text-align: center;
+}
+
+.Username {
+    text-align: center;
+}
+
+.Bio {
+    text-align: center;
+    padding: 10px;
+}
+
+.Profile-Posts{
+    justify-content: center;
+    padding: 20px;
+}
+
+.Profile-Stats {
+    margin-top: 20px;
+}
+
+.Stats-header {
+    text-align: center;
+}
+
+
+

@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 
 import Home from "./views/Home";
 import Login from "./views/Login";
@@ -7,6 +7,7 @@ import Register from "./views/Register";
 import Post from "./views/Post";
 import Upload from "./views/Upload";
 import Profile from "./views/Profile"
+import User from "./views/User"
 
 const Routes = (props) => {
 
@@ -27,7 +28,8 @@ const Routes = (props) => {
         <Register />
       </Route>
       <Route path="/post/:postID" render={ (props) => <Post currentUser={passedUser} {...props} />} />
-      <Route exact path="/uploadview">
+      <Route path="/user/:username" render={ (props) => <User currentUser={passedUser} {...props} />} />
+      <Route exact path="/upload">
         <Upload currentUser={props.currentUser} />
       </Route>
     </Switch>
