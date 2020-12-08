@@ -1,8 +1,8 @@
 import { ListGroup, Navbar, NavDropdown, Nav, Container, Row, Col, Image, InputGroup, FormControl, Button } from 'react-bootstrap';
 import React, { Component } from "react";
 import "./Post.css"
+import {withRouter} from 'react-router-dom';
 import axios from 'axios';
-
 import upvoteArrow from "./../upvote_arrow.svg";
 import heart from "./../heart.svg";
 
@@ -100,6 +100,13 @@ export class Post extends Component {
             
             })
         }
+    }
+    nextPath(path) {
+        this.props.history.push(path);
+      }
+
+    goToUser = (username) => {
+        this.nextPath(`/user/${username}`)
     }
 
     onSelect = (e) => {
@@ -241,8 +248,10 @@ export class Post extends Component {
             return (
                 <div className="Post" >
                     <div className = "profile-header">
-                        <Image className="profile-icon" src={`http://localhost:5000/${this.state.postAuthor.profilePicture}`} roundedCircle />
-                        {this.state.currentPost.author}
+                        <Button className="link" onClick={ () => this.goToUser(this.state.currentPost.author) }>
+                            <Image className="profile-icon" src={`http://localhost:5000/${this.state.postAuthor.profilePicture}`} roundedCircle />
+                            {this.state.currentPost.author}
+                        </Button>
                     </div>
 
                     <img alt="post iamge"src={`http://localhost:5000/${this.state.currentPost.postMediaFilePath}`}/>                    
@@ -314,7 +323,7 @@ export class Post extends Component {
                                                 } else if (comment.for) {
                                                     return(
                                                         <ListGroup.Item> 
-                                                        ({comment.upvotes})<i>{comment.author}</i> {comment.message}
+                                                        ({comment.upvotes})<Button className="link" onClick={() => this.goToUser(comment.author)}>{comment.author}</Button>{comment.message}
                                                    </ListGroup.Item>
                                                     )
                                                 }
@@ -343,7 +352,7 @@ export class Post extends Component {
                                                 } else if (!comment.for) {
                                                     return(
                                                         <ListGroup.Item> 
-                                                        ({comment.upvotes})<i>{comment.author}</i> {comment.message}
+                                                        ({comment.upvotes})<Button className="link" onClick={() => this.goToUser(comment.author)}>{comment.author}</Button> {comment.message}
                                                    </ListGroup.Item>
                                                     )
                                                 }
@@ -387,4 +396,4 @@ export class Post extends Component {
         }
     }
 };
-export default Post; 
+export default withRouter(Post); 
