@@ -28,7 +28,7 @@ const Routes = (props) => {
       </Route>
       <Route path="/post/:postID" render={ (props) => <Post currentUser={passedUser} {...props} />} />
       <Route exact path="/uploadview">
-        <Upload/>
+        <Upload currentUser={props.currentUser} />
       </Route>
     </Switch>
   );
