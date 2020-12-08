@@ -57,7 +57,7 @@ export class App extends Component {
                     <Nav class="navbar-nav ml-auto">
                         <LinkContainer to="/profile">
                       <Nav.Link>
-                  <Image height= "25px" width= "25px" className="navbar-icon" src={`http://localhost:5000/profilePics/${profilePath}`} roundedCircle />{username}</Nav.Link>
+                  <Image height= "25px" width= "25px" className="navbar-icon" src={`http://localhost:5000/${profilePath}`} roundedCircle />{username}</Nav.Link>
                       </LinkContainer>
                       <LinkContainer to="/uploadview">
                         <Nav.Link>Upload</Nav.Link>

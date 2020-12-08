@@ -74,13 +74,17 @@ export default class Login extends React.Component{
         console.log(`Title: ${this.state.title}`);
         console.log(`file: ${this.state.filePath}`);
         console.log(`description: ${this.state.description}`);
-        console.log(`rows: ${this.state.rows}`);
+        for (let i = 0; i < this.state.rows.length; i++){
+            console.log(`rows: ${this.state.rows[i].rows}`);
+        }
 
         let temp = new FormData();
         temp.append('title', this.state.title);
         temp.append('image', this.state.filePath, this.state.filePath.fileName);
         temp.append('message', this.state.description);
-        temp.append('sources', this.state.rows);
+        for (let i = 0; i < this.state.rows.length; i++){
+            temp.append('sources', this.state.rows[i].rows);
+        }
 
         let config = {
             headers : {
