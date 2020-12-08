@@ -22,7 +22,8 @@ export class Post extends Component {
                 "message" : "",
                 "for" : null
             },
-            "sortBy" : ""
+            "sortBy" : "",
+            "postAuthor" : {}
     
         }
     }
@@ -195,12 +196,12 @@ export class Post extends Component {
     }
 
       
-    componentDidMount() {
+    async componentDidMount() {
        
         const {match: {params}} = this.props;
         const {postID} = params;
 
-        axios.get(`http://localhost:5000/post/${postID}`)
+        await axios.get(`http://localhost:5000/post/${postID}`)
         .then(res =>{
             this.setState({
                 currentPost : res.data,
@@ -208,10 +209,16 @@ export class Post extends Component {
             })
         });
 
-        axios.get(`http://localhost:5000/getComments/${postID}`)
+        await axios.get(`http://localhost:5000/getComments/${postID}`)
         .then(res =>{
             this.setState({comments : res.data})
         });
+
+        await axios.get(`http://localhost:5000/profile/${this.state.currentPost.author}`)
+            .then(res =>
+                {
+                    this.setState({postAuthor : res.data})
+                });
 
         this.state.comments.sort((a, b) => b.upvotes - a.upvotes);
     }
@@ -230,12 +237,11 @@ export class Post extends Component {
             )
         } else {
 
-           
 
             return (
                 <div className="Post" >
                     <div className = "profile-header">
-                        <Image className="profile-icon" src="https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg" roundedCircle />
+                        <Image className="profile-icon" src={`http://localhost:5000/${this.state.postAuthor.profilePicture}`} roundedCircle />
                         {this.state.currentPost.author}
                     </div>
 
@@ -252,7 +258,7 @@ export class Post extends Component {
 
                         <Row>
                             <Col className="source">
-                                <i>Souces:</i>
+                                <i>Sources:</i>
                                 { 
                                     this.state.currentPost.sources.map( (source) => 
                                         (
