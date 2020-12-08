@@ -1,65 +1,81 @@
 import { LinkContainer } from 'react-router-bootstrap';
 import Routes from './Routes.js';
-import { Nav, Navbar} from 'react-bootstrap';
+import { Nav, Navbar, Image} from 'react-bootstrap';
 import './App.css';
 import AgoraIcon from "./Agora Logo.svg";
-import { useState } from 'react';
+import { Component } from 'react';
 
-function App() {
+export class App extends Component {
+  constructor(props) {
+    super(props);
+    
+    this.state = {
+      currentUser : {
+        token : null,
+        data : null
+      }
 
-  const [currentUser, setCurrentUser] = useState({
-    token: null,
-    data: null
-  });
+    }
+  }
+
+   setCurrentUser = (state, value) => {
+    this.setState({currentUser : { [state] : value }})
+  }
 
 
-  return (
-    <div className="App">
-    <Navbar bg="dark" variant="dark">
-      <div class="navbar-nav abs-center-x">
-      <LinkContainer to="/">
-        <Navbar.Brand>
-        <a href="#">
-          <img class="logoSpacing" src={AgoraIcon} />
-        </a>        
-          </Navbar.Brand>
-      </LinkContainer>
-      </div>
+  render(){
+    return (
+      <div className="App">
+      <Navbar bg="dark" variant="dark">
+        <div class="navbar-nav abs-center-x">
+        <LinkContainer to="/">
+            <Nav.Link>
+            <Image className="logoSpacing" src={AgoraIcon} /> 
+            </Nav.Link>
+        </LinkContainer>
+        </div>
 
-      <Nav class="navbar-nav ml-auto">
-      { ( () => {
-              if (currentUser.token === null) {
-                return (
-                  <Nav class="navbar-nav ml-auto">
-                    <LinkContainer to="/login">
-                    <Nav.Link>Login</Nav.Link>
-                    </LinkContainer>
+        <Nav class="navbar-nav ml-auto">
+        { ( () => {
+                if (this.state.currentUser.token === null || this.state.currentUser.data === undefined) {
+                  return (
+                    <Nav class="navbar-nav ml-auto">
+                      <LinkContainer to="/login">
+                      <Nav.Link>Login</Nav.Link>
+                      </LinkContainer>
+                      </Nav>
+                  ) 
+                  
+                } else {
+
+                  const username = this.state.currentUser.data.data.username
+                  const profilePath = this.state.currentUser.data.data.profilePicture
+                  
+                  
+                  return(
+                    
+                    <Nav class="navbar-nav ml-auto">
+                        <LinkContainer to="/profile">
+                      <Nav.Link>
+                  <Image height= "25px" width= "25px" className="navbar-icon" src={`http://localhost:5000/profilePics/${profilePath}`} roundedCircle />{username}</Nav.Link>
+                      </LinkContainer>
+                      <LinkContainer to="/uploadview">
+                        <Nav.Link>Upload</Nav.Link>
+                      </LinkContainer>
+                      <LinkContainer to="/post/5fc6aca323bf6e1e7ae8e4ca">
+                        <Nav.Link>Ex</Nav.Link>
+                      </LinkContainer>
                     </Nav>
-                ) 
-                
-              } else {
-                
-                return(
-                  <Nav class="navbar-nav ml-auto">
-                      <LinkContainer to="/profile">
-                      <Nav.Link>Profile</Nav.Link>
-                    </LinkContainer>
-                    <LinkContainer to="/uploadview">
-                      <Nav.Link>Upload</Nav.Link>
-                    </LinkContainer>
-                    <LinkContainer to="/post/5fc6aca323bf6e1e7ae8e4ca">
-                      <Nav.Link>Ex</Nav.Link>
-                    </LinkContainer>
-                  </Nav>
-                )
-              } 
-          }) () 
-        }
-      </Nav>
-    </Navbar>
-    <Routes currentUser={currentUser} setCurrentUser={setCurrentUser}/>
-    </div>
-  );
+                  )
+                } 
+            }) () 
+          }
+        </Nav>
+      </Navbar>
+      <Routes currentUser={this.state.currentUser} setCurrentUser={this.setCurrentUser}/>
+      </div>
+    );
+  }
 }
 
 export default App;
