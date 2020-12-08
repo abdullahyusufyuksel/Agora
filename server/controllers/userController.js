@@ -162,6 +162,10 @@ const login = async function(req, res)
                 },
                 function(err, token)
                 {
+                  if(data.bio === 'NULL')
+                  {
+                    data.bio = '';
+                  }
                   res.json(
                     {
                       success: true,
