@@ -238,7 +238,7 @@ const changeProfilePic = async function(req, res)
 }
 const getImage = async function(req, res)
 {
-  if(req.params.fileName != '')
+  if(req.params.fileName === '')
   {
     res.status(404).send(null);
   } else

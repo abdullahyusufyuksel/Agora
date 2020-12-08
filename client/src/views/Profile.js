@@ -44,7 +44,7 @@ export class Profile extends Component {
       return (
         <div className="Profile" >
         <div className = "Profile-header">
-            <Image className="Profile-icon" src={`http://localhost:5000/profilePics/${this.props.currentUser.data.data.profilePicture}`} roundedCircle />
+            <Image className="Profile-icon" src={`http://localhost:5000/${this.props.currentUser.data.data.profilePicture}`} roundedCircle />
         </div>
     <Container className="Profile-details">
         <Row>
@@ -108,7 +108,7 @@ export class Profile extends Component {
           this.state.userPost.map( (post) => {
               return(
                 <Card style={{flex: 0}}>
-                  <Card.Img variant="top" src="https://media.9news.com/assets/CCT/images/f91f601a-aa7e-485d-83a0-34ef17bdd6ef/f91f601a-aa7e-485d-83a0-34ef17bdd6ef_1920x1080.jpg" />
+                  <Card.Img variant="top" src={`http://localhost:5000/${post.postMediaFilePath}`} />
                   <Card.Body>
                     <Card.Title>{post.title}</Card.Title>
                     <Card.Text>
