@@ -48,7 +48,7 @@ export class Register extends React.Component{
             lastName: this.state.lastName,
             email: this.state.email,
             bio: 'NULL',
-            profilePicture: ' profilePics/default.png',
+            profilePicture: 'profilePics/default.png',
             isAdmin: false
           };
 
