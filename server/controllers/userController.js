@@ -252,7 +252,7 @@ const getImage = async function(req, res)
     res.status(404).send(null);
   } else
   {
-    let filePath = await path.resolve('profilePics/' + req.params.fileName);
+    let filePath = await path.resolve('./profilePics/' + req.params.fileName);
     res.status(200).sendFile(filePath)
   }
 
