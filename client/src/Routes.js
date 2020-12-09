@@ -26,7 +26,7 @@ const Routes = (props) => {
         <Profile currentUser={props.currentUser}/>
       </Route>
       <Route exact path="/settings">
-        <Settings currentUser={props.currentUser}/>
+        <Settings currentUser={props.currentUser} setCurrentUser={props.setCurrentUser}/>
       </Route>
       <Route exact path="/register">
         <Register />
