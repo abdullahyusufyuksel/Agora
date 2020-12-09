@@ -184,7 +184,7 @@ export class Upload extends React.Component{
 
                 <div class="uploadForm">
                 <Button onClick={this.onSubmit}>
-                    Submit
+                    Post
                 </Button>
                 </div>
 
