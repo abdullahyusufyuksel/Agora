@@ -1,0 +1,17 @@
+.text-center {
+  width: 100%;
+  max-width: 350px;
+  padding: 0px;
+  margin: auto;
+  padding-top: 20px;
+}
+
+.test1 {
+  margin-bottom: 20px;
+}
+.test2 {
+  margin-bottom: 32px;
+}
+.test3 {
+  margin-bottom: 32px;
+}
