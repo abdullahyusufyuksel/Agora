@@ -18,6 +18,8 @@ export class Profile extends Component {
       }
   }
 
+  
+
   nextPath(path) {
     this.props.history.push(path);
   }

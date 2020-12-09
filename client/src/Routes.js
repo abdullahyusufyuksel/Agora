@@ -7,6 +7,7 @@ import Register from "./views/Register";
 import Post from "./views/Post";
 import Upload from "./views/Upload";
 import Profile from "./views/Profile"
+import Settings from "./views/Settings"
 import User from "./views/User"
 
 const Routes = (props) => {
@@ -23,6 +24,9 @@ const Routes = (props) => {
       </Route>
       <Route exact path="/profile">
         <Profile currentUser={props.currentUser}/>
+      </Route>
+      <Route exact path="/settings">
+        <Settings currentUser={props.currentUser}/>
       </Route>
       <Route exact path="/register">
         <Register />

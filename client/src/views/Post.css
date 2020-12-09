@@ -86,3 +86,8 @@ button.link:hover {
 .unselectable:hover {
     filter: brightness(120%);
 }
+
+.image {
+    height: 100%;
+    width: 100%;
+  }
