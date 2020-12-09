@@ -52,7 +52,7 @@ export class Register extends React.Component{
             isAdmin: false
           };
 
-        axios.post('http://localhost:5000/register', newUser)
+        axios.post('/api/register', newUser)
             .then(res => {
                 console.log(res)
             })
