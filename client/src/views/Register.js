@@ -1,14 +1,15 @@
 import React from "react";
 import { Button, Form } from 'react-bootstrap';
 import './Register.css'
+import {withRouter} from 'react-router-dom';
 import axios from 'axios';
 
-export default class Register extends React.Component{
+export class Register extends React.Component{
     constructor(props) {
         super(props);
 
         this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+        // this.onSubmit = this.onSubmit.bind(this);
 
         this.state = { 
             username: '',
@@ -21,10 +22,14 @@ export default class Register extends React.Component{
         };
     }
 
+    nextPath(path) {
+        this.props.history.push(path);
+      }
+
     onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
-    onSubmit(e){
-        e.preventDefault();
+    onSubmit = () => {
+        // e.preventDefault();
     
         //const { username, password, firstName, lastName, email } = this.state;
        
@@ -42,13 +47,14 @@ export default class Register extends React.Component{
             firstName: this.state.firstName,
             lastName: this.state.lastName,
             email: this.state.email,
-            biography: 'NULL',
+            bio: 'NULL',
+            profilePicture: 'profilePics/default.png',
             isAdmin: false
           };
 
         axios.post('http://localhost:5000/register', newUser)
             .then(res => {
-                console.log(res.data)
+                console.log(res)
             })
         
         this.setState({
@@ -60,7 +66,7 @@ export default class Register extends React.Component{
             isAdmin: false
         })
 
-        window.location = "/login";
+        this.nextPath('/login')
     }
     render(){
         return (
@@ -114,3 +120,5 @@ export default class Register extends React.Component{
         );
     }
 }
+
+export default withRouter(Register);

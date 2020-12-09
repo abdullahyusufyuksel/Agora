@@ -1,9 +1,10 @@
 import React from "react";
 import { Button, Form } from 'react-bootstrap';
+import {withRouter} from 'react-router-dom';
 import './Login.css'
 import axios from 'axios';
 
-export default class Login extends React.Component{
+export class Login extends React.Component{
     constructor(props) {
         super(props);
 
@@ -14,20 +15,25 @@ export default class Login extends React.Component{
             email: '',
             password: ''
         };
-    }
+    } 
+
+    nextPath(path) {
+        this.props.history.push(path);
+      }
+
     onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
-    clickRegister(){
-        window.location = "/register";
+    clickRegister = () => {
+        this.nextPath("/register")
     }
     onSubmit(e){
         e.preventDefault();
     
         //const { password, email } = this.state;
        
-        console.log("Form submitted: ");
-        console.log(`Email: ${this.state.email}`);
-        console.log(`Password: ${this.state.password}`);
+        // console.log("Form submitted: ");
+        // console.log(`Email: ${this.state.email}`);
+        // console.log(`Password: ${this.state.password}`);
 
         var User = {
             email: this.state.email,
@@ -36,15 +42,24 @@ export default class Login extends React.Component{
 
         axios.post('http://localhost:5000/login', User)
         .then(res => {
-            this.props.setCurrentUser({token: res.token})
-            this.props.setCurrentUser({data: res.data})
+            if (res.status === 200){
+                this.props.setCurrentUser("token", res.data.token);
+                this.props.setCurrentUser("data", res.data);
 
-            this.setState({
-                email: '',
-                password: ''
-            })
-    
-        //window.location = "/";    // Erases data for user in the home page for some reason. Need to fix.
+                this.setState({
+                    email: '',
+                    password: ''
+                })
+
+                this.nextPath('/')
+            } else  {
+                
+                this.setState({
+                    email: '',
+                    password: ''
+                })
+            }
+            
         });
     }
     render(){
@@ -87,3 +102,4 @@ export default class Login extends React.Component{
         );
     }
 }
+export default withRouter(Login);

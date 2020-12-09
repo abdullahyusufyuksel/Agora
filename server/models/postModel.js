@@ -7,7 +7,6 @@ const postSchema = new mongoose.Schema(
     title: {type: String, required:true},
     sources: [{type:String, required:true}],
     comments: [{type: String}],
-    sources: [{type: String}],
     upvotes: {type: Number, required: true},
     date: {type: Date, required:true},
     postMediaFilePath: {type: String, required:true}

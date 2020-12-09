@@ -2,11 +2,11 @@ import { ListGroup, Container, Row, Col, Image, Card, CardColumns, Button } from
 import { Component } from 'react';
 import {withRouter} from 'react-router-dom';
 import React from "react";
-import "./Profile.css"
+import "./User.css"
 import Axios from 'axios';
 
 
-export class Profile extends Component {
+export class User extends Component {
 
   constructor(props) {
       super(props);
@@ -24,10 +24,16 @@ export class Profile extends Component {
 
   componentDidMount() {
 
-    this.setState({currentUser : this.props.currentUser.data})
+    const {match: {params}} = this.props;
+    const {username} = params;
+    // this.setState({currentUser : this.props.currentUser.data})
+    Axios.get(`http://localhost:5000/profile/${username}`)
+    .then(res => {
+        this.setState({currentUser: res.data})
+    });
 
     try {
-      Axios.get(`http://localhost:5000/getPostByUser/${this.props.currentUser.data.data.username}`)
+      Axios.get(`http://localhost:5000/getPostByUser/${username}`)
       .then(res => {
       this.setState({userPost : res.data})
       })
@@ -41,24 +47,25 @@ export class Profile extends Component {
    
     if (this.state.currentUser !== null) {
 
+        console.log(this.state)
+
       return (
         <div className="Profile" >
         <div className = "Profile-header">
-            <Image className="Profile-icon" src={`http://localhost:5000/${this.props.currentUser.data.data.profilePicture}`} roundedCircle />
+            <Image className="Profile-icon" src={`http://localhost:5000/${this.state.currentUser.profilePicture}`} roundedCircle />
         </div>
     <Container className="Profile-details">
         <Row>
             <Col className = "Username">
-                <h4>{this.state.currentUser.data.username}</h4>
+                <h4>{this.state.currentUser.username}</h4>
             </Col>
         </Row>
         <Row>
             <Col className = "Bio">
-                <p>{this.state.currentUser.data.bio}</p>
+                <p>{this.state.currentUser.bio}</p>
             </Col>
         </Row>
         
-        <Button variant="primary">Settings</Button>
     </Container>  
 
     <Container className="Profile-Stats">
@@ -81,7 +88,7 @@ export class Profile extends Component {
                     <h5>Comments:</h5>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                    <h5>{this.state.currentUser.data.comments.length}</h5> 
+                    <h5>{this.state.currentUser.comments.length}</h5> 
                     </ListGroup.Item>
                 </ListGroup>
 
@@ -93,7 +100,7 @@ export class Profile extends Component {
                     <h5>Agora Score:</h5>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      <h5>{(this.state.currentUser.data.posts.length + this.state.currentUser.data.comments.length) * 2}</h5> 
+                      <h5>{(this.state.currentUser.posts.length + this.state.currentUser.comments.length) * 2}</h5> 
                     </ListGroup.Item>
                 </ListGroup>
 
@@ -126,7 +133,7 @@ export class Profile extends Component {
     } else {
       return(
         <div>
-          <h1 >Log in to view profile.</h1>
+          <h1 >This user does not exist.</h1>
         </div>
       );
     }
@@ -134,4 +141,4 @@ export class Profile extends Component {
   }
 }
 
-export default withRouter(Profile);
+export default withRouter(User);
