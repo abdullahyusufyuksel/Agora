@@ -47,7 +47,7 @@ export class Post extends Component {
                 "Authorization": currentUser.data.token
             }
         }
-        axios.post(`http://localhost:5000/commentOnPost/${postID}`, commentSend, config)
+        axios.post(`/api/commentOnPost/${postID}`, commentSend, config)
         .then( () => {
             this.refreshComments()
         });
@@ -71,7 +71,7 @@ export class Post extends Component {
         }
 
         this.setState({ newComment: {for: false}});
-        axios.post(`http://localhost:5000/commentOnPost/${postID}`, commentSend, config)
+        axios.post(`/api/commentOnPost/${postID}`, commentSend, config)
         .then( () => {
             this.refreshComments()
            
@@ -94,7 +94,7 @@ export class Post extends Component {
                 }
             }
 
-            axios.post(`http://localhost:5000/upvotePost/${postID}`, "" ,config)
+            axios.post(`/api/upvotePost/${postID}`, "" ,config)
             .then( () => {
                 this.setState({upvotes: (this.state.upvotes + 1)})
             
@@ -164,7 +164,7 @@ export class Post extends Component {
             }
         }
 
-        axios.post(`http://localhost:5000/upvoteComment/${postID}/${comment._id}`, currentUser.data ,config)
+        axios.post(`/api/upvoteComment/${postID}/${comment._id}`, currentUser.data ,config)
     }
     
     refreshComments(){
@@ -173,7 +173,7 @@ export class Post extends Component {
 
         console.log(this.state)
 
-        axios.get(`http://localhost:5000/post/${postID}`)
+        axios.get(`/api/post/${postID}`)
         .then(res =>{
             this.setState({
                 currentPost : res.data,
@@ -182,7 +182,7 @@ export class Post extends Component {
             
         });
 
-        axios.get(`http://localhost:5000/getComments/${postID}`)
+        axios.get(`/api/getComments/${postID}`)
         .then(res =>{
             let commentsTemp = res.data
             if (this.state.sortBy === "Most Upvoted"){
@@ -208,7 +208,7 @@ export class Post extends Component {
         const {match: {params}} = this.props;
         const {postID} = params;
 
-        await axios.get(`http://localhost:5000/post/${postID}`)
+        await axios.get(`/api/post/${postID}`)
         .then(res =>{
             this.setState({
                 currentPost : res.data,
@@ -216,12 +216,12 @@ export class Post extends Component {
             })
         });
 
-        await axios.get(`http://localhost:5000/getComments/${postID}`)
+        await axios.get(`/api/getComments/${postID}`)
         .then(res =>{
             this.setState({comments : res.data})
         });
 
-        await axios.get(`http://localhost:5000/profile/${this.state.currentPost.author}`)
+        await axios.get(`/api/profile/${this.state.currentPost.author}`)
             .then(res =>
                 {
                     this.setState({postAuthor : res.data})
@@ -249,12 +249,12 @@ export class Post extends Component {
                 <div className="Post" >
                     <div className = "profile-header">
                         <Button className="link" onClick={ () => this.goToUser(this.state.currentPost.author) }>
-                            <Image height="50px" width="50px" className="profile-icon" src={`http://localhost:5000/${this.state.postAuthor.profilePicture}`} roundedCircle />
+                            <Image height="50px" width="50px" className="profile-icon" src={`/api/${this.state.postAuthor.profilePicture}`} roundedCircle />
                             {this.state.currentPost.author}
                         </Button>
                     </div>
 
-                    <img class = "image" alt="post iamge"src={`http://localhost:5000/${this.state.currentPost.postMediaFilePath}`}/>                    
+                    <img alt="post iamge"src={`/api/${this.state.currentPost.postMediaFilePath}`}/>                    
 
                     <Container className="details">
                         <Row>

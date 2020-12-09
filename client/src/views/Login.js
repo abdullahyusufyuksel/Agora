@@ -34,7 +34,7 @@ export class Login extends React.Component{
             password: this.state.password
           };
 
-        axios.post('/login', User)
+        axios.post('api/login', User)
         .then(res => {
             if (res.status === 200){
                 this.props.setCurrentUser("token", res.data.token);

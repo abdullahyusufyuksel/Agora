@@ -63,75 +63,75 @@ const userUpload = multer(
 */
 
 // Route for viewing 
-Router.get('/profile', passport.authenticate('jwt', {session: false}), userController.getProfile);
+Router.get('/api/profile', passport.authenticate('jwt', {session: false}), userController.getProfile);
 
 // Route for registering
-Router.post('/register', userController.createNewUser);
+Router.post('/api/register', userController.createNewUser);
 
 // Route for logging in
-Router.post('/login', userController.login);
+Router.post('/api/login', userController.login);
 
 // Route for getting user by username
-Router.get('/profile/:username', userController.getUserByUsername)
+Router.get('/api/profile/:username', userController.getUserByUsername)
 
 // Route for updating user bio
-Router.post('/settings/updateBio', passport.authenticate('jwt', {session: false}), userController.updateBio);
+Router.post('/api/updateBio', passport.authenticate('jwt', {session: false}), userController.updateBio);
 
 // Route for changing profile pic
-Router.post('/settings/changeProfilePicture', passport.authenticate('jwt', {session: false}), userUpload.single('image'), userController.changeProfilePic)
+Router.post('/api/changeProfilePicture', passport.authenticate('jwt', {session: false}), userUpload.single('image'), userController.changeProfilePic)
 
 // Route for changing password
-Router.post('/settings/changePassword', passport.authenticate('jwt', {session: false}), userController.changePassword);
+Router.post('/api/changePassword', passport.authenticate('jwt', {session: false}), userController.changePassword);
 
 // Route for getting profile pic
-Router.get('/profilePics/:fileName', userController.getImage);
+Router.get('/api/profilePics/:fileName', userController.getImage);
 /*
     POST CONTROLLER ROUTES
 */
 
 // Route for creating a post
-Router.post('/upload', passport.authenticate('jwt', {session: false}), postUpload.single('image'), postController.createNewPost);
+Router.post('/api/upload', passport.authenticate('jwt', {session: false}), postUpload.single('image'), postController.createNewPost);
 
 // Route for getting all posts
-Router.get('/', postController.getAllPosts);
+Router.get('/api/', postController.getAllPosts);
 
 
 // Route for getting post by id 
 // @access PUBLIC
-Router.get('/post/:postID', postController.getPostById)
+Router.get('/api/post/:postID', postController.getPostById)
 
 // Route for clearing post database - DO NOT LINK TO FRONTEND
 
-Router.delete('/', postController.clearDatabase);
+Router.delete('/api/', postController.clearDatabase);
 
 // Route for searching for a title with the matching search parameter
-Router.get('/search', postController.searchTitles);
+Router.get('/api/search', postController.searchTitles);
 
 // Route for upvoting a post
-Router.post('/upvotePost/:postID', passport.authenticate('jwt', {session: false}), postController.upvotePost)
+Router.post('/api/upvotePost/:postID', passport.authenticate('jwt', {session: false}), postController.upvotePost)
 
 // Route for removing an upvote from a post
-Router.post('/removePostUpvote/:postID', passport.authenticate('jwt', {session: false}), postController.removeUpvote);
+Router.post('/api/removePostUpvote/:postID', passport.authenticate('jwt', {session: false}), postController.removeUpvote);
 
 // Route for getting image
-Router.get('/postMedia/:fileName', postController.getImage);
+Router.get('/api/postMedia/:fileName', postController.getImage);
 
 // Route for getting post by username
-Router.get('/getPostByUser/:username', postController.getPostByUser);
+Router.get('/api/getPostByUser/:username', postController.getPostByUser);
 /*
     COMMENT CONTROLLER ROUTES
 */
 
 // Route for creating a comment
-Router.post('/commentOnPost/:postID', passport.authenticate('jwt', {session: false}), commentController.createNewComment);
+Router.post('/api/commentOnPost/:postID', passport.authenticate('jwt', {session: false}), commentController.createNewComment);
 
 // Route for upvoting a comment
-Router.post('/upvoteComment/:postID/:commentID', passport.authenticate('jwt', {session: false}), commentController.upvoteComment);
+Router.post('/api/upvoteComment/:postID/:commentID', passport.authenticate('jwt', {session: false}), commentController.upvoteComment);
 
 // Route for removing an upvote from a comment
-Router.post('/removeCommentUpvote/:commentID', passport.authenticate('jwt', {session: false}),  commentController.removeUpvote);
+Router.post('/api/removeCommentUpvote/:commentID', passport.authenticate('jwt', {session: false}),  commentController.removeUpvote);
 
 // Route for getting comments by postID
-Router.get('/getComments/:postID', commentController.getCommentsByPostID);
+Router.get('/api/getComments/:postID', commentController.getCommentsByPostID);
 
 module.exports = Router

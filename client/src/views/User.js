@@ -27,13 +27,13 @@ export class User extends Component {
     const {match: {params}} = this.props;
     const {username} = params;
     // this.setState({currentUser : this.props.currentUser.data})
-    Axios.get(`http://localhost:5000/profile/${username}`)
+    Axios.get(`/api/profile/${username}`)
     .then(res => {
         this.setState({currentUser: res.data})
     });
 
     try {
-      Axios.get(`http://localhost:5000/getPostByUser/${username}`)
+      Axios.get(`/api/getPostByUser/${username}`)
       .then(res => {
       this.setState({userPost : res.data})
       })
@@ -52,7 +52,7 @@ export class User extends Component {
       return (
         <div className="Profile" >
         <div className = "Profile-header">
-            <Image className="Profile-icon" src={`http://localhost:5000/${this.state.currentUser.profilePicture}`} roundedCircle />
+            <Image className="Profile-icon" src={`/api/${this.state.currentUser.profilePicture}`} roundedCircle />
         </div>
     <Container className="Profile-details">
         <Row>
@@ -116,7 +116,7 @@ export class User extends Component {
           this.state.userPost.map( (post) => {
               return(
                 <Card style={{flex: 0}}>
-                  <Card.Img variant="top" src={`http://localhost:5000/${post.postMediaFilePath}`} />
+                  <Card.Img variant="top" src={`/api/${post.postMediaFilePath}`} />
                   <Card.Body>
                     <Card.Title>{post.title}</Card.Title>
                     <Card.Text>
