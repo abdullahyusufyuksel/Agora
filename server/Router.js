@@ -75,13 +75,13 @@ Router.post('/login', userController.login);
 Router.get('/profile/:username', userController.getUserByUsername)
 
 // Route for updating user bio
-Router.post('/updateBio', passport.authenticate('jwt', {session: false}), userController.updateBio);
+Router.post('/settings/updateBio', passport.authenticate('jwt', {session: false}), userController.updateBio);
 
 // Route for changing profile pic
-Router.post('/changeProfilePicture', passport.authenticate('jwt', {session: false}), userUpload.single('image'), userController.changeProfilePic)
+Router.post('/settings/changeProfilePicture', passport.authenticate('jwt', {session: false}), userUpload.single('image'), userController.changeProfilePic)
 
 // Route for changing password
-Router.post('/changePassword', passport.authenticate('jwt', {session: false}), userController.changePassword);
+Router.post('/settings/changePassword', passport.authenticate('jwt', {session: false}), userController.changePassword);
 
 // Route for getting profile pic
 Router.get('/profilePics/:fileName', userController.getImage);
