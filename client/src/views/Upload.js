@@ -98,17 +98,11 @@ export class Upload extends React.Component{
             }
         }
         
-        var data = {
-            title: this.state.title,
-            image: this.state.filePath,
-            message: this.state.description,
-            sources: this.state.rows
-          };
 
         axios.post('/api/upload', temp, config)
             .then(res => {
                 console.log(res.data);
-                this.nextPath('/profile')
+                this.nextPath(`/post/${res.data._id}`)
             })
 
         this.setState({
@@ -140,7 +134,7 @@ export class Upload extends React.Component{
                     </Form.Group>
                     <Form.Group>
                         <input type="file" onChange={this.handleImage}/>
-                        <img class = "image" src={this.state.file}/>
+                        <img alt="" class = "image" src={this.state.file}/>
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>
@@ -190,7 +184,7 @@ export class Upload extends React.Component{
 
                 <div class="uploadForm">
                 <Button onClick={this.onSubmit}>
-                    Submit
+                    Post
                 </Button>
                 </div>
 
