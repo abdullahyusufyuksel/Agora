@@ -272,7 +272,7 @@ export class Post extends Component {
                                     this.state.currentPost.sources.map( (source) => 
                                         (
                                             <p>
-                                                <a href={source}> <i>{source}</i></a>
+                                                 <i>{source}</i>
                                             </p>
                                         )
                                     )
