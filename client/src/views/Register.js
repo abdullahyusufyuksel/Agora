@@ -109,7 +109,7 @@ export class Register extends React.Component{
                         <Form.Label>
                             Password
                         </Form.Label>
-                        <Form.Control name = "password" value={this.state.password} onChange={e => this.onChange(e)} type ="password" placeholder="Password" />
+                        <Form.Control name = "password" value={this.state.password} onChange={e => this.onChange(e)} placeholder="Password" />
                     </Form.Group>
                     
                     <Button onClick={this.onSubmit}>

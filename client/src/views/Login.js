@@ -28,19 +28,13 @@ export class Login extends React.Component{
     }
     onSubmit(e){
         e.preventDefault();
-    
-        //const { password, email } = this.state;
-       
-        // console.log("Form submitted: ");
-        // console.log(`Email: ${this.state.email}`);
-        // console.log(`Password: ${this.state.password}`);
 
         var User = {
             email: this.state.email,
             password: this.state.password
           };
 
-        axios.post('http://localhost:5000/login', User)
+        axios.post('/login', User)
         .then(res => {
             if (res.status === 200){
                 this.props.setCurrentUser("token", res.data.token);

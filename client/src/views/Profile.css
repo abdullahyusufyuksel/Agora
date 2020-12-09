@@ -12,8 +12,16 @@
 }
 
 .Profile-icon {
-    height:200px;
-    width:200px;
+    height:150x;
+    width:250px;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    user-drag: none; 
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 .Profile-details{
@@ -40,6 +48,50 @@
 
 .Stats-header {
     text-align: center;
+}
+
+.score{
+    -webkit-animation: color-change 2s infinite;
+    -moz-animation: color-change 2s infinite;
+    -o-animation: color-change 2s infinite;
+    -ms-animation: color-change 2s infinite;
+    animation: color-change 2s infinite;
+}
+
+@-webkit-keyframes color-change {
+    0% { color: red; }
+    20% { color: orange; }
+    50% { color: yellow; }
+    50% { color: green; }
+    100% { color: blue; }
+}
+@-moz-keyframes color-change {
+    0% { color: red; }
+    20% { color: orange; }
+    50% { color: yellow; }
+    50% { color: green; }
+    100% { color: blue; }
+}
+@-ms-keyframes color-change {
+    0% { color: red; }
+    20% { color: orange; }
+    50% { color: yellow; }
+    50% { color: green; }
+    100% { color: blue; }
+}
+@-o-keyframes color-change {
+    0% { color: red; }
+    20% { color: orange; }
+    50% { color: yellow; }
+    50% { color: green; }
+    100% { color: blue; }
+}
+@keyframes color-change {
+    0% { color: red; }
+    20% { color: orange; }
+    50% { color: yellow; }
+    50% { color: green; }
+    100% { color: blue; }
 }
 
 

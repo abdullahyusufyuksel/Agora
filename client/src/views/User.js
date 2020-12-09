@@ -84,11 +84,11 @@ export class User extends Component {
 
             <Col>
                 <ListGroup>
-                    <ListGroup.Item className="Stats-header">
-                    <h5>Comments:</h5>
+                <ListGroup.Item className="Stats-header">
+                    <h5>Agora Score:</h5>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                    <h5>{this.state.currentUser.comments.length}</h5> 
+                      <h5 className="score"> {(this.state.currentUser.posts.length + this.state.currentUser.comments.length) * 2}</h5> 
                     </ListGroup.Item>
                 </ListGroup>
 
@@ -96,12 +96,13 @@ export class User extends Component {
                         
             <Col>
                 <ListGroup>
-                    <ListGroup.Item className="Stats-header">
-                    <h5>Agora Score:</h5>
+                <ListGroup.Item className="Stats-header">
+                    <h5>Comments:</h5>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      <h5>{(this.state.currentUser.posts.length + this.state.currentUser.comments.length) * 2}</h5> 
+                    <h5>{this.state.currentUser.comments.length}</h5> 
                     </ListGroup.Item>
+                   
                 </ListGroup>
 
             </Col>

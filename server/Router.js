@@ -7,11 +7,15 @@ const multer = require('multer');
 const path = require('path');
 const Router = express.Router();
 
+let postFilePath =  path.resolve(__dirname + '/postMedia/');
+let profPicFilePath =  path.resolve(__dirname + '/profilePics/');
+
 // MULTER FOR POSTS
 const postStorage = multer.diskStorage(
     {
         destination: function(req, file, cb) {
-            cb(null, './postMedia/');
+            // console.log(postFilePath);
+            cb(null, postFilePath);
         }, 
         filename: function(req, file, cb) 
         {
@@ -34,7 +38,8 @@ const postUpload = multer(
 const userStorage = multer.diskStorage(
     {
         destination: function(req, file, cb) {
-            cb(null, './profilePics/');
+            // console.log(profPicFilePath);
+            cb(null, profPicFilePath);
         }, 
         filename: function(req, file, cb) 
         {
