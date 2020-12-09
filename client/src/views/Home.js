@@ -55,7 +55,7 @@ nextPath(path) {
 
 componentDidMount(){
   
-  Axios.get(`http://localhost:5000/`)
+  Axios.get(`/api/`)
   .then(res => {
     this.setState({userPost : res.data})
     this.setState({ userPost: this.state.userPost.sort((a, b) => {
@@ -143,7 +143,7 @@ componentDidMount(){
      {this.state.userPost.slice(0,4).map( (post) => {
         return (
       <Card style={{ width: '22rem' }}>
-        <Card.Img variant="top" src={post.postMediaFilePath} />
+        <Card.Img variant="top" src={`/api/${post.postMediaFilePath}`} />
         <Card.Body>
     <Card.Title>{post.title} </Card.Title>
           <Card.Text>
@@ -162,7 +162,7 @@ componentDidMount(){
     {this.state.userPost.slice(4,8).map( (post) => {
         return (
       <Card style={{ width: '22rem' }}>
-        <Card.Img variant="top" src={post.postMediaFilePath} />
+        <Card.Img variant="top" src={`/api/${post.postMediaFilePath}`} />
         <Card.Body>
     <Card.Title>{post.title} </Card.Title>
           <Card.Text>
@@ -181,7 +181,7 @@ componentDidMount(){
     {this.state.userPost.slice(8,12).map( (post) => {
         return (
       <Card style={{ width: '22rem' }}>
-        <Card.Img variant="top" src={post.postMediaFilePath} />
+        <Card.Img variant="top" src={`/api/${post.postMediaFilePath}`} />
         <Card.Body>
     <Card.Title>{post.title} </Card.Title>
           <Card.Text>

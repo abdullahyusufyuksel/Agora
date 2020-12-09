@@ -26,9 +26,6 @@ export class Upload extends React.Component{
         this.onSubmit = this.onSubmit.bind(this);
 
     }
-    click(){
-        window.location = "/";
-    }
 
     nextPath(path) {
         this.props.history.push(path);
@@ -108,7 +105,7 @@ export class Upload extends React.Component{
             sources: this.state.rows
           };
 
-        axios.post('http://localhost:5000/upload', temp, config)
+        axios.post('/api/upload', temp, config)
             .then(res => {
                 console.log(res.data);
                 this.nextPath('/profile')

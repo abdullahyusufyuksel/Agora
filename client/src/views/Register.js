@@ -9,7 +9,6 @@ export class Register extends React.Component{
         super(props);
 
         this.onChange = this.onChange.bind(this);
-        // this.onSubmit = this.onSubmit.bind(this);
 
         this.state = { 
             username: '',
@@ -29,17 +28,7 @@ export class Register extends React.Component{
     onChange = (e) => this.setState({ [e.target.name]: e.target.value });
 
     onSubmit = () => {
-        // e.preventDefault();
-    
-        //const { username, password, firstName, lastName, email } = this.state;
        
-        console.log(`Form submitted: `);
-        console.log(`Username: ${this.state.username}`);
-        console.log(`Password: ${this.state.password}`);
-        console.log(`First Name: ${this.state.firstName}`);
-        console.log(`Last Name: ${this.state.lastName}`);
-        console.log(`Email: ${this.state.email}`);
-
 
         var newUser = {
             username: this.state.username,
@@ -52,9 +41,9 @@ export class Register extends React.Component{
             isAdmin: false
           };
 
-        axios.post('http://localhost:5000/register', newUser)
+        axios.post('/api/register', newUser)
             .then(res => {
-                console.log(res)
+                
             })
         
         this.setState({
