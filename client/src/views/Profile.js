@@ -40,6 +40,10 @@ export class Profile extends Component {
     
 }
 
+  handleOnClick = () => {
+    this.nextPath('/settings')
+  }
+
   render() {
    
     if (this.state.currentUser !== null) {
@@ -60,7 +64,9 @@ export class Profile extends Component {
                 <p>{this.state.currentUser.data.bio}</p>
             </Col>
         </Row>
-        <Image height="35px" width="35px" className="unselectable"  src={settingsCog}/>
+        
+        <Image height="35px" width="35px" className="unselectable"  onClick={ () => this.handleOnClick()} src={settingsCog}/>
+        
         {/* <Button variant="primary">Settings</Button> */}
     </Container>  
 
