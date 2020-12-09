@@ -198,9 +198,9 @@ const getUserByUsername = async function(req, res)
 }
 const updateBio = async function(req, res)
 {
-  User.findOne(req.user.username).then(function(data)
+  User.findOne({username:req.user.username}).then(function(data)
   {
-    data.bio = req.bio;
+    data.bio = req.body.bio;
     User(data).save();
     res.status(200).send(data);
   });
@@ -234,7 +234,7 @@ const changeProfilePic = async function(req, res)
   {
     if(data.profilePicture != "NULL" && data.profilePicture != "profilePics/default.png")
     {
-      fs.unlinkSync(data.profilePicture);
+      fs.unlinkSync(path.resolve('server/' + data.profilePicture));
     }
     
     let filename = path.basename(req.file.path);
