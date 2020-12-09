@@ -249,7 +249,7 @@ export class Post extends Component {
                 <div className="Post" >
                     <div className = "profile-header">
                         <Button className="link" onClick={ () => this.goToUser(this.state.currentPost.author) }>
-                            <Image className="profile-icon" src={`http://localhost:5000/${this.state.postAuthor.profilePicture}`} roundedCircle />
+                            <Image height="50px" width="50px" className="profile-icon" src={`http://localhost:5000/${this.state.postAuthor.profilePicture}`} roundedCircle />
                             {this.state.currentPost.author}
                         </Button>
                     </div>

@@ -58,18 +58,14 @@ export class App extends Component {
                     <Nav class="navbar-nav ml-auto">
                         <LinkContainer to="/profile">
                       <Nav.Link>
-                        <Image height= "25px" width= "25px" className="navbar-icon" src={`http://localhost:5000/${profilePath}`} roundedCircle />{username}
+                        <Image height= "25px" width= "25px" className="navbar-icon unselectable" src={`http://localhost:5000/${profilePath}`} roundedCircle />{username}
                         </Nav.Link>
                       </LinkContainer>
                       <LinkContainer to="/upload">
                       <Nav.Link>
                         <Image height= "20px" width= "20px" className="navbar-icon unselectable" src={UploadIcon}/>
                         </Nav.Link>
-                        {/* <Nav.Link>Upload</Nav.Link> */}
                       </LinkContainer>
-                      {/* <LinkContainer to="/post/5fc6aca323bf6e1e7ae8e4ca">
-                        <Nav.Link>Ex</Nav.Link>
-                      </LinkContainer> */}
                     </Nav>
                   )
                 } 

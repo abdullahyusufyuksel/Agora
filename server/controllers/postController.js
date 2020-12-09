@@ -43,13 +43,17 @@ const createNewPost = async function(req, res)
         }
       );
     }
+   
+    let filename = path.basename(req.file.path);
+    filename = 'postMedia/' + filename;
+
     let newPost =
     {
         author: req.user.username,
         message: req.body.message,
         title: req.body.title,
         sources: req.body.sources,
-        postMediaFilePath: req.file.path,
+        postMediaFilePath: filename,
         date: Date.now(),
         upvotes: 0,
     }
@@ -160,7 +164,7 @@ const removeUpvote = async function(req, res)
 }
 const getImage = async function(req, res)
 {
-  let filePath = await path.resolve('../server/postMedia/' + req.params.fileName);
+  let filePath = await path.resolve('./server/postMedia/' + req.params.fileName);
   res.status(200).sendFile(filePath)
 }
 const getPostByUser = async function(req, res)

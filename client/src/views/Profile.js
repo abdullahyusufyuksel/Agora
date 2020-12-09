@@ -4,6 +4,7 @@ import {withRouter} from 'react-router-dom';
 import React from "react";
 import "./Profile.css"
 import Axios from 'axios';
+import settingsCog from './../settings_cog.svg';
 
 
 export class Profile extends Component {
@@ -57,8 +58,8 @@ export class Profile extends Component {
                 <p>{this.state.currentUser.data.bio}</p>
             </Col>
         </Row>
-        
-        <Button variant="primary">Settings</Button>
+        <Image height="35px" width="35px" className="unselectable"  src={settingsCog}/>
+        {/* <Button variant="primary">Settings</Button> */}
     </Container>  
 
     <Container className="Profile-Stats">
@@ -77,23 +78,24 @@ export class Profile extends Component {
 
             <Col>
                 <ListGroup>
-                    <ListGroup.Item className="Stats-header">
-                    <h5>Comments:</h5>
+                <ListGroup.Item className="Stats-header">
+                    <h5>Agora Score:</h5>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                    <h5>{this.state.currentUser.data.comments.length}</h5> 
+                      <h5 className="score">{(this.state.currentUser.data.posts.length + this.state.currentUser.data.comments.length) * 2}</h5> 
                     </ListGroup.Item>
+                    
                 </ListGroup>
 
             </Col>
                         
             <Col>
                 <ListGroup>
-                    <ListGroup.Item className="Stats-header">
-                    <h5>Agora Score:</h5>
+                <ListGroup.Item className="Stats-header">
+                    <h5>Comments:</h5>
                     </ListGroup.Item>
                     <ListGroup.Item>
-                      <h5>{(this.state.currentUser.data.posts.length + this.state.currentUser.data.comments.length) * 2}</h5> 
+                    <h5>{this.state.currentUser.data.comments.length}</h5> 
                     </ListGroup.Item>
                 </ListGroup>
 

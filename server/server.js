@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(cors());
 
 // Connect to Atlas
-mongoose.connect(config.URI)
+mongoose.connect(config.URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(function()
     {
         console.log("Connected to MongoDB");
@@ -44,7 +44,6 @@ require('../config/passport.js')(passport);
 // Router for everything
 app.use('/', Router);
 
-app.listen(config.PORT, function() 
-{
-     console.log(`App now listening on port ${config.PORT}`)
-});
+app.listen(process.env.PORT || 5000, function(){
+    console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+  });

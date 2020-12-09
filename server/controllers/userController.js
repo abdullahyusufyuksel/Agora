@@ -134,7 +134,6 @@ const login = async function(req, res)
           });
       } else
       {
-        console.log(data);
         bcrypt.compare(existingUser.password, data.password, function(err, result)
         {
           if(!result)
@@ -237,7 +236,11 @@ const changeProfilePic = async function(req, res)
     {
       fs.unlinkSync(data.profilePicture);
     }
-    data.profilePicture = req.file.path;
+    
+    let filename = path.basename(req.file.path);
+    filename = 'profilePics/' + filename;
+    data.profilePicture = filename;
+    
     User(data).save();
     res.status(200).send(data);
   });
@@ -249,7 +252,7 @@ const getImage = async function(req, res)
     res.status(404).send(null);
   } else
   {
-    let filePath = await path.resolve('../server/profilePics/' + req.params.fileName);
+    let filePath = await path.resolve('./server/profilePics/' + req.params.fileName);
     res.status(200).sendFile(filePath)
   }
 

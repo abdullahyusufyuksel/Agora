@@ -1,11 +1,12 @@
 import React from "react";
 import FormData from 'form-data';
-import { Button, Form, FormGroup } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import axios from 'axios';
+import {withRouter} from 'react-router-dom';
 import './Upload.css'
 
 
-export default class Login extends React.Component{
+export class Upload extends React.Component{
     constructor(props) {
         super(props);
 
@@ -28,6 +29,11 @@ export default class Login extends React.Component{
     click(){
         window.location = "/";
     }
+
+    nextPath(path) {
+        this.props.history.push(path);
+      }
+
     handleImage(event) {
         if (event.target.files[0] != null) {
             this.setState({
@@ -104,7 +110,8 @@ export default class Login extends React.Component{
 
         axios.post('http://localhost:5000/upload', temp, config)
             .then(res => {
-                console.log(res.data)
+                console.log(res.data);
+                this.nextPath('/profile')
             })
 
         this.setState({
@@ -115,7 +122,8 @@ export default class Login extends React.Component{
             rows: []
         })
 
-        // window.location = "/login";
+        
+
     }
 
     render(){
@@ -193,3 +201,5 @@ export default class Login extends React.Component{
         );
     }
 }
+
+export default withRouter(Upload);
