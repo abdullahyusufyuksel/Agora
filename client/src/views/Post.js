@@ -254,7 +254,7 @@ export class Post extends Component {
                         </Button>
                     </div>
 
-                    <img alt="post iamge"src={`http://localhost:5000/${this.state.currentPost.postMediaFilePath}`}/>                    
+                    <img class = "image" alt="post iamge"src={`http://localhost:5000/${this.state.currentPost.postMediaFilePath}`}/>                    
 
                     <Container className="details">
                         <Row>
