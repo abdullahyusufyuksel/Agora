@@ -78,7 +78,7 @@ componentDidMount(){
       hButton2 = "Login"
       link1 = "/register"
       link2 = "/login"
-      hMessage = "Share and fact-check advertisements and posts related to concurrent social topics today!"
+      hMessage = "Share and debate advertisement, news, and posts related to concurrent social topics today!"
       rHeader1 =""
       rHeader2 = ""
       rMessage1= ""
@@ -89,7 +89,7 @@ componentDidMount(){
       hButton2 = ""
       link1 = ""
       link2 = ""
-      hMessage = "See resources below on information on how to stay safe during covid "
+      hMessage = "Bsaed on Agora Trending: \"how to stay safe during covid\" "
       rHeader1 ="When to Quarantine:"
       rHeader2 = "CDC testing information:"
       rMessage1= "https://www.cdc.gov/coronavirus/2019-ncov/more/scientific-brief-options-to-reduce-quarantine.html"
@@ -126,7 +126,7 @@ componentDidMount(){
       
       </Jumbotron>
       <Navbar bg="light" expand="lg">
-      <Navbar.Brand href="#home">Current Posts</Navbar.Brand>
+      <Navbar.Brand >Discover</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav class="justify-center-right">
@@ -143,7 +143,7 @@ componentDidMount(){
      {this.state.userPost.slice(0,4).map( (post) => {
         return (
       <Card style={{ width: '22rem' }}>
-        <Card.Img variant="top" src={`/api/${post.postMediaFilePath}`} />
+        <Card.Img className="image-card" variant="top" src={`/api/${post.postMediaFilePath}`} />
         <Card.Body>
     <Card.Title>{post.title} </Card.Title>
           <Card.Text>
@@ -162,7 +162,7 @@ componentDidMount(){
     {this.state.userPost.slice(4,8).map( (post) => {
         return (
       <Card style={{ width: '22rem' }}>
-        <Card.Img variant="top" src={`/api/${post.postMediaFilePath}`} />
+        <Card.Img className="image-card" variant="top" src={`/api/${post.postMediaFilePath}`} />
         <Card.Body>
     <Card.Title>{post.title} </Card.Title>
           <Card.Text>
@@ -181,7 +181,7 @@ componentDidMount(){
     {this.state.userPost.slice(8,12).map( (post) => {
         return (
       <Card style={{ width: '22rem' }}>
-        <Card.Img variant="top" src={`/api/${post.postMediaFilePath}`} />
+        <Card.Img className="image-card" variant="top" src={`/api/${post.postMediaFilePath}`} />
         <Card.Body>
     <Card.Title>{post.title} </Card.Title>
           <Card.Text>

@@ -42,8 +42,10 @@ export class Settings extends React.Component{
 
         axios.post('/api/changeProfilePicture', temp, config)
             .then(res => {
-                console.log(res.data);
-                this.nextPath('/profile')
+                // console.log(res.data);
+                // this.nextPath('/profile')
+                this.nextPath('/login');
+                window.location.reload();
             })
 
         this.setState({
@@ -85,7 +87,7 @@ export class Settings extends React.Component{
             .then(res => {
                 this.nextPath('/login');
                 window.location.reload();
-                console.log(res);
+                // console.log(res);
             });
         
         this.setState({
@@ -109,7 +111,9 @@ export class Settings extends React.Component{
         axios.post('/api/updateBio', bio, config)
             .then(res => {
                 //this.props.setCurrentUser('data', {'bio':this.state.bio})
-                console.log(res);
+                // console.log(res);
+                this.nextPath('/login');
+                window.location.reload();
             });
 
         this.setState({

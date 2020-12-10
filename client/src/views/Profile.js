@@ -48,6 +48,13 @@ export class Profile extends Component {
    
     if (this.state.currentUser !== null) {
 
+      var bio = this.state.currentUser.data.bio
+      
+      if(bio === "NULL"){
+        bio = ""
+      }
+      
+
       return (
         <div className="Profile" >
         <div className = "Profile-header">
@@ -61,7 +68,7 @@ export class Profile extends Component {
         </Row>
         <Row>
             <Col className = "Bio">
-                <p>{this.state.currentUser.data.bio}</p>
+                <p>{bio}</p>
             </Col>
         </Row>
         

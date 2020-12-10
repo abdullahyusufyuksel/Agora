@@ -44,10 +44,16 @@ export class User extends Component {
 }
 
   render() {
+
    
     if (this.state.currentUser !== null) {
 
-        console.log(this.state)
+      var bio = this.state.currentUser.bio;
+
+      if(bio === "NULL"){
+        bio = ""
+      }
+     
 
       return (
         <div className="Profile" >
@@ -62,7 +68,7 @@ export class User extends Component {
         </Row>
         <Row>
             <Col className = "Bio">
-                <p>{this.state.currentUser.bio}</p>
+                <p>{bio}</p>
             </Col>
         </Row>
         
