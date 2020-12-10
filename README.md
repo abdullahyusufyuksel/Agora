@@ -10,6 +10,7 @@ Clone the repository to your local machine and once it has cloned, install your 
 After ensuring that all dependencies have been downloaded.
 Open up two terminals in order to run the backend and the frontend.
 
+
 To start the backend: navigate to the *Agora* folder and type the following into the first terminal
 > node server.js
 
