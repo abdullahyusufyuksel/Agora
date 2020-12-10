@@ -166,7 +166,7 @@ export class Settings extends React.Component{
                         Save Password Changes
                     </Button>
                     
-                <p>{this.state.resultMessage}</p>
+                <p className="settings-msg"><i>Any changes to your settings will require you to sign back in!</i></p>
 
                 </Form>
             </div>
