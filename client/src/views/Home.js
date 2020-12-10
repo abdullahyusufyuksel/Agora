@@ -89,7 +89,7 @@ componentDidMount(){
       hButton2 = ""
       link1 = ""
       link2 = ""
-      hMessage = "Bsaed on Agora Trending: \"how to stay safe during covid\" "
+      hMessage = "Based on Agora Trending: \"how to stay safe during covid\" "
       rHeader1 ="When to Quarantine:"
       rHeader2 = "CDC testing information:"
       rMessage1= "https://www.cdc.gov/coronavirus/2019-ncov/more/scientific-brief-options-to-reduce-quarantine.html"
